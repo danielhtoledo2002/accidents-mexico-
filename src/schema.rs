@@ -1,80 +1,108 @@
 // @generated automatically by Diesel CLI.
 
 diesel::table! {
-    atms (name) {
-        name -> Varchar,
-        address -> Varchar,
-        bank_id -> Unsigned<Integer>,
-        money -> Unsigned<Double>,
+    accidentes_2020 (id) {
+        id -> Integer,
+        COBERTURA -> Varchar,
+        ID_ENTIDAD -> Varchar,
+        ID_MUNICIPIO -> Varchar,
+        ANIO -> Varchar,
+        MES -> Integer,
+        ID_HORA -> Integer,
+        ID_MINUTO -> Integer,
+        ID_DIA -> Integer,
+        DIASEMANA -> Varchar,
+        URBANA -> Varchar,
+        SUBURBANA -> Varchar,
+        TIPACCID -> Varchar,
+        AUTOMOVIL -> Varchar,
+        CAMPASAJ -> Integer,
+        MICROBUS -> Integer,
+        PASCAMION -> Integer,
+        OMNIBUS -> Integer,
+        TRANVIA -> Integer,
+        CAMIONETA -> Integer,
+        CAMION -> Integer,
+        TRACTOR -> Integer,
+        FERROCARRI -> Nullable<Integer>,
+        MOTOCICLET -> Nullable<Integer>,
+        BICICLETA -> Nullable<Integer>,
+        OTROVEHIC -> Nullable<Integer>,
+        CAUSAACCI -> Nullable<Varchar>,
+        CAPAROD -> Nullable<Varchar>,
+        SEXO -> Nullable<Varchar>,
+        ALIENTO -> Nullable<Varchar>,
+        CINTURON -> Nullable<Varchar>,
+        ID_EDAD -> Nullable<Varchar>,
+        CONDMUERTO -> Nullable<Varchar>,
+        CONDHERIDO -> Nullable<Varchar>,
+        PASAMUERTO -> Nullable<Varchar>,
+        PASAHERIDO -> Nullable<Varchar>,
+        PEATMUERTO -> Nullable<Varchar>,
+        PEATHERIDO -> Nullable<Varchar>,
+        CICLMUERTO -> Nullable<Varchar>,
+        CICLHERIDO -> Nullable<Varchar>,
+        OTROMUERTO -> Nullable<Varchar>,
+        OTROHERIDO -> Nullable<Varchar>,
+        NEMUERTO -> Nullable<Varchar>,
+        NEHERIDO -> Nullable<Varchar>,
+        CLASACC -> Nullable<Varchar>,
+        ESTATUS -> Nullable<Varchar>,
     }
 }
 
 diesel::table! {
-    cards (number) {
-        number -> Varchar,
-        bank_id -> Unsigned<Integer>,
-        cvv -> Unsigned<Integer>,
-        nip -> Integer,
-        expiration_date -> Date,
-        balance -> Unsigned<Double>,
-        #[sql_name = "type"]
-        type_ -> Varchar,
-        expired -> Bool,
-        tryall -> Unsigned<Integer>,
+    accidentes_2021 (ID) {
+        COBERTURA -> Nullable<Varchar>,
+        ID_ENTIDAD -> Nullable<Varchar>,
+        ID_MUNICIPIO -> Nullable<Varchar>,
+        ANIO -> Nullable<Varchar>,
+        MES -> Nullable<Varchar>,
+        ID_HORA -> Nullable<Varchar>,
+        ID_MINUTO -> Nullable<Varchar>,
+        ID_DIA -> Nullable<Varchar>,
+        DIASEMANA -> Nullable<Varchar>,
+        URBANA -> Nullable<Varchar>,
+        SUBURBANA -> Nullable<Varchar>,
+        TIPACCID -> Nullable<Varchar>,
+        AUTOMOVIL -> Nullable<Varchar>,
+        CAMPASAJ -> Nullable<Varchar>,
+        MICROBUS -> Nullable<Varchar>,
+        PASCAMION -> Nullable<Varchar>,
+        OMNIBUS -> Nullable<Varchar>,
+        TRANVIA -> Nullable<Varchar>,
+        CAMIONETA -> Nullable<Varchar>,
+        CAMION -> Nullable<Varchar>,
+        TRACTOR -> Nullable<Varchar>,
+        FERROCARRI -> Nullable<Varchar>,
+        MOTOCICLET -> Nullable<Varchar>,
+        BICICLETA -> Nullable<Varchar>,
+        OTROVEHIC -> Nullable<Varchar>,
+        CAUSAACCI -> Nullable<Varchar>,
+        CAPAROD -> Nullable<Varchar>,
+        SEXO -> Nullable<Varchar>,
+        ALIENTO -> Nullable<Varchar>,
+        CINTURON -> Nullable<Varchar>,
+        ID_EDAD -> Nullable<Varchar>,
+        CONDMUERTO -> Nullable<Varchar>,
+        CONDHERIDO -> Nullable<Varchar>,
+        PASAMUERTO -> Nullable<Varchar>,
+        PASAHERIDO -> Nullable<Varchar>,
+        PEATMUERTO -> Nullable<Varchar>,
+        PEATHERIDO -> Nullable<Varchar>,
+        CICLMUERTO -> Nullable<Varchar>,
+        CICLHERIDO -> Nullable<Varchar>,
+        OTROMUERTO -> Nullable<Varchar>,
+        OTROHERIDO -> Nullable<Varchar>,
+        NEMUERTO -> Nullable<Varchar>,
+        NEHERIDO -> Nullable<Varchar>,
+        CLASACC -> Nullable<Varchar>,
+        ESTATUS -> Nullable<Varchar>,
+        ID -> Unsigned<Integer>,
     }
 }
-
-diesel::table! {
-    deposits (id) {
-        id -> Unsigned<Integer>,
-        amount -> Unsigned<Double>,
-        date -> Date,
-        card_number -> Varchar,
-        atm_name -> Varchar,
-    }
-}
-
-diesel::table! {
-    deudas (id) {
-        id -> Unsigned<Integer>,
-        number -> Varchar,
-        #[sql_name = "type"]
-        type_ -> Varchar,
-        deuda -> Double,
-    }
-}
-
-diesel::table! {
-    transfers (id) {
-        id -> Unsigned<Integer>,
-        date -> Date,
-        amount -> Unsigned<Double>,
-        sent_money -> Varchar,
-        received_money -> Varchar,
-    }
-}
-
-diesel::table! {
-    withdrawals (id) {
-        id -> Unsigned<Integer>,
-        amount -> Double,
-        date -> Date,
-        atm_name -> Varchar,
-        card_number -> Varchar,
-    }
-}
-
-diesel::joinable!(deposits -> atms (atm_name));
-diesel::joinable!(deposits -> cards (card_number));
-diesel::joinable!(deudas -> cards (number));
-diesel::joinable!(withdrawals -> atms (atm_name));
-diesel::joinable!(withdrawals -> cards (card_number));
 
 diesel::allow_tables_to_appear_in_same_query!(
-    atms,
-    cards,
-    deposits,
-    deudas,
-    transfers,
-    withdrawals,
+    accidentes_2020,
+    accidentes_2021,
 );
