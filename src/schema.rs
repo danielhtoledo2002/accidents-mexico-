@@ -1,7 +1,7 @@
 // @generated automatically by Diesel CLI.
-
+#![recursion_limit = "256"]
 diesel::table! {
-    accidentes_2020 (id) {
+    accidentes_2018 (id) {
         id -> Integer,
         COBERTURA -> Varchar,
         ID_ENTIDAD -> Varchar,
@@ -52,32 +52,33 @@ diesel::table! {
 }
 
 diesel::table! {
-    accidentes_2021 (ID) {
-        COBERTURA -> Nullable<Varchar>,
-        ID_ENTIDAD -> Nullable<Varchar>,
-        ID_MUNICIPIO -> Nullable<Varchar>,
-        ANIO -> Nullable<Varchar>,
-        MES -> Nullable<Varchar>,
-        ID_HORA -> Nullable<Varchar>,
-        ID_MINUTO -> Nullable<Varchar>,
-        ID_DIA -> Nullable<Varchar>,
-        DIASEMANA -> Nullable<Varchar>,
-        URBANA -> Nullable<Varchar>,
-        SUBURBANA -> Nullable<Varchar>,
-        TIPACCID -> Nullable<Varchar>,
-        AUTOMOVIL -> Nullable<Varchar>,
-        CAMPASAJ -> Nullable<Varchar>,
-        MICROBUS -> Nullable<Varchar>,
-        PASCAMION -> Nullable<Varchar>,
-        OMNIBUS -> Nullable<Varchar>,
-        TRANVIA -> Nullable<Varchar>,
-        CAMIONETA -> Nullable<Varchar>,
-        CAMION -> Nullable<Varchar>,
-        TRACTOR -> Nullable<Varchar>,
-        FERROCARRI -> Nullable<Varchar>,
-        MOTOCICLET -> Nullable<Varchar>,
-        BICICLETA -> Nullable<Varchar>,
-        OTROVEHIC -> Nullable<Varchar>,
+    accidentes_2019 (id) {
+        id -> Integer,
+        COBERTURA -> Varchar,
+        ID_ENTIDAD -> Varchar,
+        ID_MUNICIPIO -> Varchar,
+        ANIO -> Varchar,
+        MES -> Integer,
+        ID_HORA -> Integer,
+        ID_MINUTO -> Integer,
+        ID_DIA -> Integer,
+        DIASEMANA -> Varchar,
+        URBANA -> Varchar,
+        SUBURBANA -> Varchar,
+        TIPACCID -> Varchar,
+        AUTOMOVIL -> Varchar,
+        CAMPASAJ -> Integer,
+        MICROBUS -> Integer,
+        PASCAMION -> Integer,
+        OMNIBUS -> Integer,
+        TRANVIA -> Integer,
+        CAMIONETA -> Integer,
+        CAMION -> Integer,
+        TRACTOR -> Integer,
+        FERROCARRI -> Nullable<Integer>,
+        MOTOCICLET -> Nullable<Integer>,
+        BICICLETA -> Nullable<Integer>,
+        OTROVEHIC -> Nullable<Integer>,
         CAUSAACCI -> Nullable<Varchar>,
         CAPAROD -> Nullable<Varchar>,
         SEXO -> Nullable<Varchar>,
@@ -98,11 +99,7 @@ diesel::table! {
         NEHERIDO -> Nullable<Varchar>,
         CLASACC -> Nullable<Varchar>,
         ESTATUS -> Nullable<Varchar>,
-        ID -> Unsigned<Integer>,
     }
 }
 
-diesel::allow_tables_to_appear_in_same_query!(
-    accidentes_2020,
-    accidentes_2021,
-);
+diesel::allow_tables_to_appear_in_same_query!(accidentes_2018, accidentes_2019,);

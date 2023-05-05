@@ -1,24 +1,27 @@
+#![recursion_limit = "256"]
 use leptos::*;
+
 mod schema;
 use diesel::*;
 use schema::*;
 
 #[derive(Queryable, PartialEq, Debug, Selectable)]
-#[diesel(table_name = cards)]
-struct Cards {
-    number: String,
-    bank_id: u32,
+#[diesel(table_name = accidentes_2018)]
+struct IdsAcc {
+    id: i32,
+    ID_ENTIDAD: String,
 }
 
 pub fn establish_connection() -> MysqlConnection {
-    MysqlConnection::establish("mysql://daniel:1234@localhost/banco").unwrap()
+    MysqlConnection::establish("mysql://root:1234@localhost/Accidents").unwrap()
 }
 
 fn main() {
-    use schema::cards::dsl::*;
+    use schema::accidentes_2018::dsl::*;
+
     let mut conection = establish_connection();
-    let x = cards
-        .select((number, bank_id))
-        .load::<Cards>(&mut conection);
-    println!("{:?}", x);
+    let prueba = accidentes_2018
+        .select((id, ID_ENTIDAD))
+        .load::<IdsAcc>(&mut conection);
+    println!("{:?}", prueba);
 }
