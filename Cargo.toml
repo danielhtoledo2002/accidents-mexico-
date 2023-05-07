@@ -6,6 +6,10 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-diesel = { version = "2.0.4", features = ["mysql", "64-column-tables", "bigdecimal"] }
 leptos = { version = "0.2.5", features = ["stable"] }
 plotters = "0.3"
+sqlx = { version = "0.6.2", features = ["mysql", "runtime-tokio-native-tls", "macros", "time"] }
+tokio = { version = "1.21.2", features = ["full"] }
+time = { version = "0.3.17", features = ["formatting", "macros"] }
+serde = "1.0.148"
+anyhow = "1.0.66"
