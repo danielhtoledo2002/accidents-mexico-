@@ -1,6 +1,8 @@
+drop database if exist Accidents;
+create database Accidents;
 use Accidents;
-drop table if exists  accidentes_2019;
-CREATE TABLE accidentes_2019(
+drop table if exists  accidentes_2020;
+CREATE TABLE accidentes_2020(
     id integer NOT NULL AUTO_INCREMENT,
     COBERTURA VARCHAR(15) NOT NULL,
     ID_ENTIDAD varchar(5) not null,
@@ -50,16 +52,16 @@ CREATE TABLE accidentes_2019(
     PRIMARY KEY (id)
 );
 
-LOAD DATA  INFILE "/var/lib/mysql-files/atus_anual_2019.csv"
-INTO TABLE accidentes_2019
+LOAD DATA  INFILE "/home/danielhtoledo/Accidentes/conjunto_de_datos/atus_anual_2020.csv"
+INTO TABLE accidentes_2020
 FIELDS TERMINATED BY ','
 ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
 IGNORE 1 ROWS;
 
 
-drop table if exists  accidentes_2018;
-CREATE TABLE accidentes_2018(
+drop table if exists  accidentes_2021;
+CREATE TABLE accidentes_2021(
     id integer NOT NULL AUTO_INCREMENT,
     COBERTURA VARCHAR(15) NOT NULL,
     ID_ENTIDAD varchar(5) not null,
@@ -109,8 +111,8 @@ CREATE TABLE accidentes_2018(
     PRIMARY KEY (id)
 );
 
-LOAD DATA  INFILE "/var/lib/mysql-files/atus_anual_2018.csv"
-INTO TABLE accidentes_2018
+LOAD DATA  INFILE "/home/danielhtoledo/Accidentes/conjunto_de_datos/atus_anual_2021.csv"
+INTO TABLE accidentes_2021
 FIELDS TERMINATED BY ','
 ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
