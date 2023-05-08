@@ -107,7 +107,11 @@ async fn main() {
     let mut pool = MySqlPool::connect("mariadb://root:1234@localhost/Accidents")
         .await
         .unwrap();
-    // ya la muestra con el estado real y no con el id 
+    // ya la muestra con el estado real y no con el id
+
+    println!("");
+    println!("");
+    println!("Acidentes por estado en el 2020"); 
     let mut estados_accidentes_2020:Vec<_> = make_query::<StateAccidentsSql>("select ID_ENTIDAD, COUNT(ID_ENTIDAD) as numero_accidentes from accidentes_2020 GROUP BY ID_ENTIDAD HAVING COUNT(ID_ENTIDAD) > 1 ",
         &mut pool
     )
@@ -117,9 +121,10 @@ async fn main() {
     estados_accidentes_2020.sort_by(|a, b| a.accidentes.cmp(&b.accidentes)); //ordena de menor a mayor por el numero de accidentes por ciudad.
        
     println!("{:?}", estados_accidentes_2020);
-
-    // Para el año 2021
-
+    println!("");
+    println!("");
+    println!("Accidentes por estado en el 2021");
+   
     let mut estados_accidentes_2021:Vec<_> = make_query::<StateAccidentsSql>("select ID_ENTIDAD, COUNT(ID_ENTIDAD) as numero_accidentes from accidentes_2021 GROUP BY ID_ENTIDAD HAVING COUNT(ID_ENTIDAD) > 1 ",
         &mut pool
     )
