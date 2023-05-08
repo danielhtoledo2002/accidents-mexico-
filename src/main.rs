@@ -17,7 +17,7 @@ struct StateAccidents{
 }
 
 fn construct(estado: &str, acci: i32)->StateAccidents{
-    match estado {
+    match estado.trim() {
         "01" => StateAccidents { state: "Aguascalientes", accidentes: acci },
         "02" => StateAccidents { state: "Baja California", accidentes: acci },
         "03" => StateAccidents { state: "Baja California Sur", accidentes: acci  },
@@ -96,6 +96,8 @@ where
     }
 }
 
+
+
 /*
 advertecia algunos id tienes que ponerlos como 09 como en el ID_ENTIDAD
 */
@@ -106,14 +108,27 @@ async fn main() {
         .await
         .unwrap();
     // ya la muestra con el estado real y no con el id 
-    let mut query:Vec<_> = make_query::<StateAccidentsSql>("select ID_ENTIDAD, COUNT(ID_ENTIDAD) as numero_accidentes from accidentes_2020 GROUP BY ID_ENTIDAD HAVING COUNT(ID_ENTIDAD) > 1 ",
+    let mut estados_accidentes_2020:Vec<_> = make_query::<StateAccidentsSql>("select ID_ENTIDAD, COUNT(ID_ENTIDAD) as numero_accidentes from accidentes_2020 GROUP BY ID_ENTIDAD HAVING COUNT(ID_ENTIDAD) > 1 ",
         &mut pool
     )
     .await    
     .unwrap().into_iter().map(|i| construct(i.ID_ENTIDAD.as_str(),i.numero_accidentes )).collect();
 
-    query.sort_by(|a, b| a.accidentes.cmp(&b.accidentes));
-    
-    println!("{:?}", query);
+    estados_accidentes_2020.sort_by(|a, b| a.accidentes.cmp(&b.accidentes)); //ordena de menor a mayor por el numero de accidentes por ciudad.
+       
+    println!("{:?}", estados_accidentes_2020);
+
+    // Para el año 2021
+
+    let mut estados_accidentes_2021:Vec<_> = make_query::<StateAccidentsSql>("select ID_ENTIDAD, COUNT(ID_ENTIDAD) as numero_accidentes from accidentes_2021 GROUP BY ID_ENTIDAD HAVING COUNT(ID_ENTIDAD) > 1 ",
+        &mut pool
+    )
+    .await    
+    .unwrap().into_iter().map(|a| construct(a.ID_ENTIDAD.as_str(),a.numero_accidentes )).collect();
+
+    estados_accidentes_2021.sort_by(|c, d| c.accidentes.cmp(&d.accidentes));  
+       
+    println!("{:?}", estados_accidentes_2021);
+
 
 }
