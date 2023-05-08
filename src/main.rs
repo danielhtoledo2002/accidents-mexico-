@@ -89,40 +89,15 @@ where
 
 // Give me all the accidents that happen in a state in the year without any filter
 async fn give_accidents_state(tabla : &str, pool : &sqlx::Pool<MySql>) -> Vec<StateAccidents>{
-    match tabla.trim(){
-        "2018" => {
-            
-        let estados_accidentes_2018:Vec<_> = make_query::< StateAccidentsSql>("select ID_ENTIDAD, COUNT(ID_ENTIDAD) as numero_accidentes from accidentes_2018 GROUP BY ID_ENTIDAD HAVING COUNT(ID_ENTIDAD) > 1 ",
-             pool
-        )
+    make_query::< StateAccidentsSql>(
+        format!("select ID_ENTIDAD, COUNT(ID_ENTIDAD) as numero_accidentes from accidentes_{} GROUP BY ID_ENTIDAD HAVING COUNT(ID_ENTIDAD) > 1 ", tabla.trim()),
+     pool
+    )
         .await    
-        .unwrap().into_iter().map(|i| construct(i.ID_ENTIDAD.as_str(),i.numero_accidentes )).collect();
-        estados_accidentes_2018
-        },
-
-        "2019" => {
-            
-        let estados_accidentes_2019:Vec<_> = make_query::< StateAccidentsSql>("select ID_ENTIDAD, COUNT(ID_ENTIDAD) as numero_accidentes from accidentes_2019 GROUP BY ID_ENTIDAD HAVING COUNT(ID_ENTIDAD) > 1 ",
-             pool
-        )
-        .await    
-        .unwrap().into_iter().map(|i| construct(i.ID_ENTIDAD.as_str(),i.numero_accidentes )).collect();
-        estados_accidentes_2019
-        },
-        "2020"=> {
-
-        let estados_accidentes_2020:Vec<_> = make_query::< StateAccidentsSql>("select ID_ENTIDAD, COUNT(ID_ENTIDAD) as numero_accidentes from accidentes_2020 GROUP BY ID_ENTIDAD HAVING COUNT(ID_ENTIDAD) > 1 ",
-             pool
-        )
-        .await    
-        .unwrap().into_iter().map(|i| construct(i.ID_ENTIDAD.as_str(),i.numero_accidentes )).collect();
-        estados_accidentes_2020
-        },
-
-        _ => unreachable!("NO EXISTE LA TABLA")
-        
-    }
-    
+        .unwrap()
+        .into_iter()
+        .map(|i| construct(i.ID_ENTIDAD.as_str(),i.numero_accidentes ))
+        .collect()
 } 
 
 pub async fn make_query_expect_empty<T>(
