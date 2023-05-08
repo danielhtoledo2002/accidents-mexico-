@@ -5,17 +5,19 @@ use std::time::Duration;
 use tokio::time::error::Elapsed;
 use std::io::Write;
 
+// struct to obtain the data from the table in mysql 
 #[derive(Debug, sqlx::FromRow, Clone, PartialEq, PartialOrd, Default)]
 struct StateAccidentsSql {
     ID_ENTIDAD: String,
     numero_accidentes: i32,
 }
-
+// Struct with real names 
 #[derive(Debug)]
 struct StateAccidents{
     state: &'static str,
     accidentes: i32,
 }
+// input method 
 pub fn input(msg: &str) -> Result<String> {
     let mut h = std::io::stdout();
     write!(h, "{}", msg).unwrap();
@@ -26,6 +28,7 @@ pub fn input(msg: &str) -> Result<String> {
     Ok(campos.trim().to_string())
 }
 
+// match the ID_ENTIDAD to the correspandant name in human languaje.
 fn construct(estado: &str, acci: i32)->StateAccidents{
     match estado.trim() {
         "1" => StateAccidents { state: "Aguascalientes", accidentes: acci },
@@ -67,11 +70,7 @@ fn construct(estado: &str, acci: i32)->StateAccidents{
      }
 }
 
-async fn conection() -> MySqlPool {
-    MySqlPool::connect("mysql://root:1234@localhost/Accidents")
-        .await
-        .unwrap()
-}
+// function to fill a generic struct 
 
 pub async fn make_query<T>(query: impl AsRef<str>, connection: &sqlx::Pool<MySql>) -> Result<Vec<T>>
 where
@@ -88,8 +87,8 @@ where
     }
 }
 
-
-pub async fn give_accidents_state(tabla : &str, pool : &sqlx::Pool<MySql>) -> Vec<StateAccidents>{
+// Give me all the accidents that happen in a state in the year without any filter
+async fn give_accidents_state(tabla : &str, pool : &sqlx::Pool<MySql>) -> Vec<StateAccidents>{
     match tabla.trim(){
         "2018" => {
             
@@ -146,13 +145,13 @@ where
 
 
 
-/*
-advertecia algunos id tienes que ponerlos como 09 como en el ID_ENTIDAD
-*/
+
+// advertecia algunos id tienes que ponerlos como 09  como en el ID_ENTIDAD depende de comos e creo el csv (en mi caso en la laptop se creo sin el 0 y en la pc se creo 01)
+
 
 #[tokio::main]
 async fn main() {
-    let mut pool = MySqlPool::connect("mysql://root:1234@localhost/Accidents")
+    let  pool = MySqlPool::connect("mysql://root:1234@localhost/Accidents")
         .await
         .unwrap();
     // ya la muestra con el estado real y no con el id
