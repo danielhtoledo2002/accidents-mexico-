@@ -1,16 +1,17 @@
 use anyhow::{anyhow, Error, Result};
-use leptos::*;
 use sqlx::mysql::MySqlPool;
 use sqlx::{Connection, MySql};
-use std::any::Any;
-use std::net::SocketAddr;
-use std::sync::{Arc, Mutex};
-use std::thread::sleep;
 use std::time::Duration;
 use tokio::time::error::Elapsed;
 
+#[derive(Debug, sqlx::FromRow, Clone, PartialEq, PartialOrd, Default)]
+struct StateAccidents {
+    ID_ENTIDAD: String,
+    numero_accidentes:i32,
+}
+
 async fn conection() -> MySqlPool {
-    MySqlPool::connect("msyql://root:1234@localhost/Accidents")
+    MySqlPool::connect("mariadb://root:1234@localhost/Accidents")
         .await
         .unwrap()
 }
@@ -48,8 +49,24 @@ where
     }
 }
 
-fn main() {
-    let pool = conection();
 
-    println!("hola");
+/*
+advertecia algunos id tienes que ponerlos como 09 como en el ID_ENTIDAD
+*/
+
+
+#[tokio::main]
+async fn main() {
+    let mut pool = MySqlPool::connect("mariadb://root:1234@localhost/Accidents")
+        .await
+        .unwrap();
+      
+    let query = make_query::<StateAccidents>("select ID_ENTIDAD, COUNT(ID_ENTIDAD) as numero_accidentes from accidentes_2020 GROUP BY ID_ENTIDAD HAVING COUNT(ID_ENTIDAD) > 1 ",
+        &mut pool,
+    )
+    .await
+    .unwrap();
+    println!("{:?}", query);
+
+    
 }
