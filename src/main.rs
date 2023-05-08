@@ -18,15 +18,15 @@ struct StateAccidents{
 
 fn construct(estado: &str, acci: i32)->StateAccidents{
     match estado.trim() {
-        "01" => StateAccidents { state: "Aguascalientes", accidentes: acci },
-        "02" => StateAccidents { state: "Baja California", accidentes: acci },
-        "03" => StateAccidents { state: "Baja California Sur", accidentes: acci  },
-        "04" => StateAccidents { state: "Campeche", accidentes: acci  },
-        "05" => StateAccidents { state: "Coahuila", accidentes:acci  },
-        "06" =>StateAccidents { state: "Colima", accidentes: acci },
-        "07" => StateAccidents { state: "Chiapas", accidentes:acci  },
-        "08" => StateAccidents { state: "Chihuhua", accidentes:acci  },
-        "09" => StateAccidents { state: "Ciudad de Mexico", accidentes:acci  },
+        "1" => StateAccidents { state: "Aguascalientes", accidentes: acci },
+        "2" => StateAccidents { state: "Baja California", accidentes: acci },
+        "3" => StateAccidents { state: "Baja California Sur", accidentes: acci  },
+        "4" => StateAccidents { state: "Campeche", accidentes: acci  },
+        "5" => StateAccidents { state: "Coahuila", accidentes:acci  },
+        "6" =>StateAccidents { state: "Colima", accidentes: acci },
+        "7" => StateAccidents { state: "Chiapas", accidentes:acci  },
+        "8" => StateAccidents { state: "Chihuhua", accidentes:acci  },
+        "9" => StateAccidents { state: "Ciudad de Mexico", accidentes:acci  },
         "10" => StateAccidents { state: "Durango", accidentes: acci },
         "11" => StateAccidents { state: "Guanajuato", accidentes:acci  },
         "12"=>StateAccidents { state: "Guerrero", accidentes: acci},
@@ -58,7 +58,7 @@ fn construct(estado: &str, acci: i32)->StateAccidents{
 }
 
 async fn conection() -> MySqlPool {
-    MySqlPool::connect("mariadb://root:1234@localhost/Accidents")
+    MySqlPool::connect("mysql://root:1234@localhost/Accidents")
         .await
         .unwrap()
 }
@@ -104,15 +104,15 @@ advertecia algunos id tienes que ponerlos como 09 como en el ID_ENTIDAD
 
 #[tokio::main]
 async fn main() {
-    let mut pool = MySqlPool::connect("mariadb://root:1234@localhost/Accidents")
+    let mut pool = MySqlPool::connect("mysql://root:1234@localhost/Accidents")
         .await
         .unwrap();
     // ya la muestra con el estado real y no con el id
 
     println!("");
     println!("");
-    println!("Acidentes por estado en el 2020"); 
-    let mut estados_accidentes_2020:Vec<_> = make_query::<StateAccidentsSql>("select ID_ENTIDAD, COUNT(ID_ENTIDAD) as numero_accidentes from accidentes_2020 GROUP BY ID_ENTIDAD HAVING COUNT(ID_ENTIDAD) > 1 ",
+    println!("Acidentes por estado en el 2019"); 
+    let mut estados_accidentes_2020:Vec<_> = make_query::<StateAccidentsSql>("select ID_ENTIDAD, COUNT(ID_ENTIDAD) as numero_accidentes from accidentes_2019 GROUP BY ID_ENTIDAD HAVING COUNT(ID_ENTIDAD) > 1 ",
         &mut pool
     )
     .await    
@@ -123,9 +123,9 @@ async fn main() {
     println!("{:?}", estados_accidentes_2020);
     println!("");
     println!("");
-    println!("Accidentes por estado en el 2021");
+    println!("Accidentes por estado en el 2018");
    
-    let mut estados_accidentes_2021:Vec<_> = make_query::<StateAccidentsSql>("select ID_ENTIDAD, COUNT(ID_ENTIDAD) as numero_accidentes from accidentes_2021 GROUP BY ID_ENTIDAD HAVING COUNT(ID_ENTIDAD) > 1 ",
+    let mut estados_accidentes_2021:Vec<_> = make_query::<StateAccidentsSql>("select ID_ENTIDAD, COUNT(ID_ENTIDAD) as numero_accidentes from accidentes_2018 GROUP BY ID_ENTIDAD HAVING COUNT(ID_ENTIDAD) > 1 ",
         &mut pool
     )
     .await    
