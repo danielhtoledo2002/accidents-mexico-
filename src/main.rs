@@ -3,6 +3,7 @@ use sqlx::mysql::MySqlPool;
 use sqlx::{Connection, MySql};
 use std::time::Duration;
 use tokio::time::error::Elapsed;
+use std::io::Write;
 
 #[derive(Debug, sqlx::FromRow, Clone, PartialEq, PartialOrd, Default)]
 struct StateAccidentsSql {
@@ -14,6 +15,15 @@ struct StateAccidentsSql {
 struct StateAccidents{
     state: &'static str,
     accidentes: i32,
+}
+pub fn input(msg: &str) -> Result<String> {
+    let mut h = std::io::stdout();
+    write!(h, "{}", msg).unwrap();
+    h.flush().unwrap();
+
+    let mut campos = String::new();
+    let _ = std::io::stdin().read_line(&mut campos)?;
+    Ok(campos.trim().to_string())
 }
 
 fn construct(estado: &str, acci: i32)->StateAccidents{
@@ -78,6 +88,44 @@ where
     }
 }
 
+
+pub async fn give_accidents_state(tabla : &str, pool : &sqlx::Pool<MySql>) -> Vec<StateAccidents>{
+    match tabla.trim(){
+        "2018" => {
+            
+        let estados_accidentes_2018:Vec<_> = make_query::< StateAccidentsSql>("select ID_ENTIDAD, COUNT(ID_ENTIDAD) as numero_accidentes from accidentes_2018 GROUP BY ID_ENTIDAD HAVING COUNT(ID_ENTIDAD) > 1 ",
+             pool
+        )
+        .await    
+        .unwrap().into_iter().map(|i| construct(i.ID_ENTIDAD.as_str(),i.numero_accidentes )).collect();
+        estados_accidentes_2018
+        },
+
+        "2019" => {
+            
+        let estados_accidentes_2019:Vec<_> = make_query::< StateAccidentsSql>("select ID_ENTIDAD, COUNT(ID_ENTIDAD) as numero_accidentes from accidentes_2019 GROUP BY ID_ENTIDAD HAVING COUNT(ID_ENTIDAD) > 1 ",
+             pool
+        )
+        .await    
+        .unwrap().into_iter().map(|i| construct(i.ID_ENTIDAD.as_str(),i.numero_accidentes )).collect();
+        estados_accidentes_2019
+        },
+        "2020"=> {
+
+        let estados_accidentes_2020:Vec<_> = make_query::< StateAccidentsSql>("select ID_ENTIDAD, COUNT(ID_ENTIDAD) as numero_accidentes from accidentes_2020 GROUP BY ID_ENTIDAD HAVING COUNT(ID_ENTIDAD) > 1 ",
+             pool
+        )
+        .await    
+        .unwrap().into_iter().map(|i| construct(i.ID_ENTIDAD.as_str(),i.numero_accidentes )).collect();
+        estados_accidentes_2020
+        },
+
+        _ => unreachable!("NO EXISTE LA TABLA")
+        
+    }
+    
+} 
+
 pub async fn make_query_expect_empty<T>(
     query: impl AsRef<str>,
     connection: &sqlx::Pool<MySql>,
@@ -109,31 +157,29 @@ async fn main() {
         .unwrap();
     // ya la muestra con el estado real y no con el id
 
+    let mut  estados_accidentes_2020 = give_accidents_state("2020", &pool ).await;
+    estados_accidentes_2020.sort_by(|a, b| a.accidentes.cmp(&b.accidentes)); //ordena de menor a mayor por el numero de accidentes por ciudad.
+    println!("");
+    println!("");
+    println!("Acidentes por estado en el 2020"); 
+        
+    println!("{:?}", estados_accidentes_2020);
+
+    let mut estados_accidentes_2019 = give_accidents_state("2019", &pool ).await;
+    
+    estados_accidentes_2019.sort_by(|a, b| a.accidentes.cmp(&b.accidentes)); //ordena de menor a mayor por el numero de accidentes por ciudad.
+
     println!("");
     println!("");
     println!("Acidentes por estado en el 2019"); 
-    let mut estados_accidentes_2020:Vec<_> = make_query::<StateAccidentsSql>("select ID_ENTIDAD, COUNT(ID_ENTIDAD) as numero_accidentes from accidentes_2019 GROUP BY ID_ENTIDAD HAVING COUNT(ID_ENTIDAD) > 1 ",
-        &mut pool
-    )
-    .await    
-    .unwrap().into_iter().map(|i| construct(i.ID_ENTIDAD.as_str(),i.numero_accidentes )).collect();
+    println!("{:?}", estados_accidentes_2019);
 
-    estados_accidentes_2020.sort_by(|a, b| a.accidentes.cmp(&b.accidentes)); //ordena de menor a mayor por el numero de accidentes por ciudad.
-       
-    println!("{:?}", estados_accidentes_2020);
+    let mut estados_accidentes_2018 = give_accidents_state("2018", &pool ).await;
+
+    estados_accidentes_2018.sort_by(|a,b| a.accidentes.cmp(&b.accidentes));
+
     println!("");
     println!("");
-    println!("Accidentes por estado en el 2018");
-   
-    let mut estados_accidentes_2021:Vec<_> = make_query::<StateAccidentsSql>("select ID_ENTIDAD, COUNT(ID_ENTIDAD) as numero_accidentes from accidentes_2018 GROUP BY ID_ENTIDAD HAVING COUNT(ID_ENTIDAD) > 1 ",
-        &mut pool
-    )
-    .await    
-    .unwrap().into_iter().map(|a| construct(a.ID_ENTIDAD.as_str(),a.numero_accidentes )).collect();
-
-    estados_accidentes_2021.sort_by(|c, d| c.accidentes.cmp(&d.accidentes));  
-       
-    println!("{:?}", estados_accidentes_2021);
-
-
+    println!("Acidentes por estado en el 2018"); 
+    println!("{:?}", estados_accidentes_2018);
 }
