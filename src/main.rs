@@ -58,7 +58,7 @@ where
 
 // Give me all the accidents that happen in a state in the year without any filter
 fn give_accidents_state(tabla: &str, pool: &sqlx::Pool<MySql>) -> Vec<StateAccidentsSql> {
-    make_query::< StateAccidentsSql>(format!("select NOM_ENTIDAD, COUNT(accidentes_{0}.ID_ENTIDAD) as numero_accidentes from accidentes_{0},tc_entidad where tc_entidad.ID_ENTIDAD = accidentes_{0}.ID_ENTIDAD GROUP BY NOM_ENTIDAD HAVING COUNT(accidentes_{}.ID_ENTIDAD) > 1 ", tabla.trim()), 
+    make_query::< StateAccidentsSql>(format!("select NOM_ENTIDAD, COUNT(accidentes_{0}.ID_ENTIDAD) as numero_accidentes from accidentes_{0},tc_entidad where tc_entidad.ID_ENTIDAD = accidentes_{0}.ID_ENTIDAD GROUP BY NOM_ENTIDAD ", tabla.trim()), 
      pool
     )    .unwrap()
 }
@@ -68,7 +68,7 @@ fn give_accidents_state(tabla: &str, pool: &sqlx::Pool<MySql>) -> Vec<StateAccid
 
 fn give_alcholic_state(tabla: &str, pool: &sqlx::Pool<MySql>) -> Vec<AlcholStates> {
     make_query::<AlcholStates>(format!("
-          select  NOM_ENTIDAD, ALIENTO ,count(ALIENTO)as borrachos from accidentes_2018, tc_entidad where tc_entidad.ID_ENTIDAD = accidentes_{}.ID_ENTIDAD and accidentes_2018.ALIENTO = 'si' group by NOM_ENTIDAD, ALIENTO having  count(ALIENTO) >1 ", tabla.trim()), pool).unwrap()
+          select  NOM_ENTIDAD, ALIENTO ,count(ALIENTO)as borrachos from accidentes_2018, tc_entidad where tc_entidad.ID_ENTIDAD = accidentes_{}.ID_ENTIDAD and accidentes_2018.ALIENTO = 'si' group by NOM_ENTIDAD, ALIENTO ", tabla.trim()), pool).unwrap()
 }
 
 // advertecia algunos id tienes que ponerlos como 09  como en el ID_ENTIDAD depende de comos e creo el csv (en mi caso en la laptop se creo sin el 0 y en la pc se creo 01)
@@ -112,6 +112,7 @@ fn main() {
     //query para saber que estados son los mas alcoholicos
     println!("");
     println!("");
+    println!("Número de accidentes por sustancias alcoholicas");
     let mut alcholicos_estados_2018 = give_alcholic_state("2018", &pool);
     alcholicos_estados_2018.sort_by(|a, b| a.borrachos.cmp(&b.borrachos));
 
