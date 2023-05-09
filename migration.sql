@@ -48,6 +48,7 @@ CREATE TABLE accidentes_2021(
     CLASACC varchar(70),
     ESTATUS varchar(100),
     PRIMARY KEY (id)
+    FORAIGN KEY
 );
 
 
