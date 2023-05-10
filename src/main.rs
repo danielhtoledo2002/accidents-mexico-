@@ -1,9 +1,19 @@
 use anyhow::{anyhow, Error, Result};
 use sqlx::mysql::MySqlPool;
-use sqlx::{Connection, MySql};
+use sqlx::{Connection, MySql, Pool};
 use std::io::Write;
+use std::sync::Arc;
 use std::time::Duration;
+use axum::{Router, Server};
+use axum::extract::{Path, State};
+use axum::handler::HandlerWithoutStateExt;
+use axum::http::header::{ACCESS_CONTROL_ALLOW_CREDENTIALS, ACCESS_CONTROL_ALLOW_HEADERS, ACCESS_CONTROL_ALLOW_METHODS, ACCESS_CONTROL_ALLOW_ORIGIN};
+use axum::http::{HeaderValue, StatusCode};
+use axum::response::{Html, IntoResponse};
+use axum::routing::get;
+use serde::{Deserialize, Serialize};
 use tokio::time::error::Elapsed;
+
 
 #[derive(Debug, sqlx::FromRow, Clone, PartialEq, PartialOrd, Default)]
 struct AlcholStates {
@@ -12,9 +22,10 @@ struct AlcholStates {
 }
 
 // struct to obtain the data from the table in mysql
-#[derive(Debug, sqlx::FromRow, Clone, PartialEq, PartialOrd, Default)]
+#[derive(Debug, sqlx::FromRow, Clone, PartialEq, PartialOrd, Default, Serialize, Deserialize)]
 struct StateAccidentsSql {
-    NOM_ENTIDAD: String,
+    #[sqlx(rename = "NOM_ENTIDAD")]
+    nombre_entidad: String,
     numero_accidentes: i32,
 }
 
@@ -27,40 +38,28 @@ struct TypeAccidentByState {
     cantidad: i32,
 }
 
-// input method
-pub fn input(msg: &str) -> Result<String> {
-    let mut h = std::io::stdout();
-    write!(h, "{}", msg).unwrap();
-    h.flush().unwrap();
 
-    let mut campos = String::new();
-    let _ = std::io::stdin().read_line(&mut campos)?;
-    Ok(campos.trim().to_string())
-}
 
 // function to fill a generic struct
 
-fn make_query<T>(query: impl AsRef<str>, connection: &sqlx::Pool<MySql>) -> Result<Vec<T>>
+async fn make_query<T>(query: impl AsRef<str>, connection: &sqlx::Pool<MySql>) -> Result<Vec<T>>
 where
     for<'a> T: sqlx::FromRow<'a, sqlx::mysql::MySqlRow> + Send + Unpin,
 {
-    use tokio::runtime::Runtime;
-    let rt = Runtime::new().unwrap();
-    rt.block_on(async {
-        let result: Vec<T> = sqlx::query_as::<_, T>(query.as_ref())
-            .fetch_all(connection)
-            .await?;
+    let result: Vec<T> = sqlx::query_as::<_, T>(query.as_ref())
+        .fetch_all(connection)
+        .await?;
 
-        if result.is_empty() {
-            Err(anyhow!("No se encontró ningún dato"))
-        } else {
-            Ok(result)
-        }
-    })
+    if result.is_empty() {
+        Err(anyhow!("No se encontró ningún dato"))
+    } else {
+        Ok(result)
+    }
+
 }
 
 // Give me all the accidents that happen in a state in the year without any filter
-fn give_accidents_state(anio: i32, pool: &sqlx::Pool<MySql>) -> Vec<StateAccidentsSql> {
+async fn give_accidents_state(anio: i32, pool: &sqlx::Pool<MySql>) -> Vec<StateAccidentsSql> {
     make_query::<StateAccidentsSql>(
         format!(
             "SELECT NOM_ENTIDAD, numero_accidentes FROM (
@@ -74,13 +73,13 @@ JOIN tc_entidad USING(ID_ENTIDAD);  ",
             anio
         ),
         pool,
-    )
+    ).await
     .unwrap()
 }
 
 // fn give_alcolics_state(tabla :&str, pool :&sqlx::Pool<MySql>) -> Vec<>
 
-fn give_alcholic_state(anio: i32, pool: &sqlx::Pool<MySql>) -> Vec<AlcholStates> {
+async fn give_alcholic_state(anio: i32, pool: &sqlx::Pool<MySql>) -> Vec<AlcholStates> {
     make_query::<AlcholStates>(
         format!(
             "SELECT NOM_ENTIDAD, borrachos FROM (
@@ -95,78 +94,54 @@ fn give_alcholic_state(anio: i32, pool: &sqlx::Pool<MySql>) -> Vec<AlcholStates>
             anio
         ),
         pool,
-    )
+    ).await
     .unwrap()
 }
 
-fn give_type_accident(tyype: &str, pool: &sqlx::Pool<MySql>, anio : i32, state : i32) -> Vec<TypeAccidentByState>{
+async fn give_type_accident(tyype: &str, pool: &sqlx::Pool<MySql>, anio : i32, state : i32) -> Vec<TypeAccidentByState>{
     make_query::<TypeAccidentByState>(format!("
     select NOM_ENTIDAD, tipo, cantidad from (select ID_ENTIDAD, COUNT(ID_ENTIDAD) AS
     cantidad,TIPACCID as tipo  from atus_anual where ANIO = {1} AND TIPACCID = '{0}' and ID_ENTIDAD = {2} group by ID_ENTIDAD, TIPACCID) AS res
     join tc_entidad using(ID_ENTIDAD);
-    ", tyype.trim(), anio, state) ,pool).unwrap()
+    ", tyype.trim(), anio, state) ,pool).await.unwrap()
 
 }
 
 
 // advertecia algunos id tienes que ponerlos como 09  como en el ID_ENTIDAD depende de comos e creo el csv (en mi caso en la laptop se creo sin el 0 y en la pc se creo 01)
 
-fn main() {
-    use tokio::runtime::Runtime;
-    let rt = Runtime::new().unwrap();
-    let pool = rt.block_on(async {
-        MySqlPool::connect("mysql://root:aesr@187.208.119.8/accidents")
-            .await
-            .unwrap()
-    });
-    // ya la muestra con el estado real y no con el id
+async fn query1(Path(anio): Path<i32>, State(state): State<Arc<Pool<MySql>>>) -> impl IntoResponse {
+    println!("{}", anio);
+    let msg = give_accidents_state(anio, &state).await;
+    let mut response = (StatusCode::OK, serde_json::to_string(&msg).unwrap()).into_response();
+    response.headers_mut().append(ACCESS_CONTROL_ALLOW_ORIGIN, HeaderValue::from_static("*"));
+    response.headers_mut().append(ACCESS_CONTROL_ALLOW_HEADERS, HeaderValue::from_static("*"));
+    response.headers_mut().append(ACCESS_CONTROL_ALLOW_CREDENTIALS, HeaderValue::from_static("*"));
+    response.headers_mut().append(ACCESS_CONTROL_ALLOW_METHODS, HeaderValue::from_static("*"));
+    response
+}
 
-    let mut estados_accidentes_2020 = give_accidents_state(2020, &pool);
-    estados_accidentes_2020.sort_by(|a, b| a.numero_accidentes.cmp(&b.numero_accidentes)); //ordena de menor a mayor por el numero de accidentes por ciudad.
-    println!("");
-    println!("");
-    println!("Acidentes por estado en el 2020");
+async fn page() -> impl IntoResponse {
+    let html = include_str!("../index.html");
 
-    println!("{:?}", estados_accidentes_2020);
+    let mut response = Html(html).into_response();
+    response.headers_mut().append(ACCESS_CONTROL_ALLOW_ORIGIN, HeaderValue::from_static("*"));
+    response.headers_mut().append(ACCESS_CONTROL_ALLOW_HEADERS, HeaderValue::from_static("*"));
+    response.headers_mut().append(ACCESS_CONTROL_ALLOW_CREDENTIALS, HeaderValue::from_static("*"));
+    response.headers_mut().append(ACCESS_CONTROL_ALLOW_METHODS, HeaderValue::from_static("*"));
+    response
+}
 
-    let mut estados_accidentes_2019 = give_accidents_state(2019, &pool);
+#[tokio::main]
+async fn main() {
+    let state = Arc::new(MySqlPool::connect("mariadb://root:Pinky01*@localhost/accidents").await.unwrap());
+    let router = Router::new()
+        .route("/query1/:anio", get(query1))
+        .route("/page", get(page))
+        .with_state(state);
 
-    estados_accidentes_2019.sort_by(|a, b| a.numero_accidentes.cmp(&b.numero_accidentes)); //ordena de menor a mayor por el numero de accidentes por ciudad.
-
-    println!("");
-    println!("");
-    println!("Acidentes por estado en el 2019");
-    println!("{:?}", estados_accidentes_2019);
-
-    let mut estados_accidentes_2018 = give_accidents_state(2018, &pool);
-
-    estados_accidentes_2018.sort_by(|a, b| a.numero_accidentes.cmp(&b.numero_accidentes));
-
-    println!("");
-    println!("");
-    println!("Acidentes por estado en el 2018");
-    println!("{:?}", estados_accidentes_2018);
-
-    //query para saber que estados son los mas alcoholicos
-    println!("");
-    println!("");
-    println!("Número de accidentes por sustancias alcoholicas");
-    let mut alcholicos_estados_2018 = give_alcholic_state(2018, &pool);
-    alcholicos_estados_2018.sort_by(|a, b| a.borrachos.cmp(&b.borrachos));
-
-    println!("{:?}", alcholicos_estados_2018);
-
-
-    println!("");
-    println!("");
-    println!("Número de tipos de accidente por estado ");
-
-    let mut type_accident = give_type_accident("Colisión con ciclista", &pool,2018, 9 );
-
-
-    type_accident.sort_by(|a, b| a.cantidad.cmp(&b.cantidad));
-
-    println!("{:?}", type_accident);
-
-
+    Server::bind(&"0.0.0.0:80".parse().unwrap())
+        .serve(router.into_make_service())
+        .await
+        .unwrap()
 }
