@@ -1,55 +1,310 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
+<head >
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.12.1/dist/cdn.min.js"></script>
+    <link href="styles.css" rel="stylesheet"/>
     <meta charset="utf-8">
-    <title>Leptos • Counter with Tailwind</title>
+    <title>Análisis Accidentes</title>
+
     <script>
         async function getQuery(anio) {
-            let chartStatus = Chart.getChart("myChart"); // <canvas> id
+            let chartStatus = Chart.getChart("myChart");
             if (chartStatus != undefined) {
                 chartStatus.destroy();
             }
 
-            let response = await fetch(`http://127.0.0.1/query1/${anio}`, {mode: 'cors'});
+            let response = await fetch(`/query1/${anio}`, {mode: 'cors'});
 
             const ctx = document.getElementById('myChart');
 
-            let labels = []
-            let values = []
-
             let json = await response.json()
-            json.forEach(value => {
-                labels.push(value.nombre_entidad)
-                values.push(value.numero_accidentes)
-            });
 
+            let labels =  json.x
+            let values =  json.y
 
             new Chart(ctx, {
                 type: 'bar',
                 data: {
                     labels: labels,
                     datasets: [{
-                        label: `Numero de accidentes ${anio}`,
+                        label: `Número de accidentes por estado ${anio}`,
                         data: values,
-                        borderWidth: 1
+                        borderWidth: 1,
+                        backgroundColor: 'rgba(192,192,192,1)',
+                        borderColor:'#fff'
+
+
                     }]
                 },
                 options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            ticks: { color: 'black', beginAtZero: true }
+                        },
+                        x: {
+                            ticks: { color: 'black', beginAtZero: true }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: 'black',
+
+                                font: {
+                                    size: 20,
+                                    weight: '1000'
+                                }
+                            }
+                        },
+                    }
                 }
             });
         }
     </script>
+
+    <script>
+      async function getQuery2(anio2) {
+          let chartStatus = Chart.getChart("myChart2");
+          if (chartStatus != undefined) {
+              chartStatus.destroy();
+          }
+
+          let response = await fetch(`/query2/${anio2}`, {mode: 'cors'});
+
+          const ctx = document.getElementById('myChart2');
+
+          let json = await response.json()
+
+          let labels =  json.x
+          let values =  json.y
+
+          new Chart(ctx, {
+              type: 'bar',
+              data: {
+                  labels: labels,
+                  datasets: [{
+                      label: `Número de accidentes de borrachos por estado ${anio2}`,
+                      data: values,
+                      borderWidth: 0.5,
+                      backgroundColor: "rgba(192,192,192,1)",
+                      borderColor:'#fff'
+                  }]
+              },
+              options: {
+                  responsive: true,
+                  scales: {
+                      y: {
+                          ticks: { color: 'black', beginAtZero: true }
+                      },
+                      x: {
+                          ticks: { color: 'black', beginAtZero: true }
+                      }
+                  },
+                  plugins: {
+                      legend: {
+                          labels: {
+                              color: 'black',
+
+                              font: {
+                                  size: 20,
+                                  weight: '1000'
+                              }
+                          }
+                      },
+
+                  }
+              }
+          });
+      }
+    </script>
+
+    <script>
+      async function getQuery3(){
+        let chartStatus = Chart.getChart("myChart3");
+        if (chartStatus != undefined) {
+            chartStatus.destroy();
+        }
+
+        let response = await fetch(`/query3/`, {mode: 'cors'});
+
+        const ctx = document.getElementById('myChart3');
+
+        let json = await response.json()
+
+        let labels =  json.x
+        let values =  json.y
+
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: `Número de Accidentes por Año `,
+                    data: values,
+                    borderWidth: 10,
+                    backgroundColor: "rgba(192,192,192,1)",
+                    borderColor:'#fff'
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        ticks: { color: 'black', beginAtZero: true }
+                    },
+                    x: {
+                        ticks: { color: 'black', beginAtZero: true }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: 'black',
+
+                            font: {
+                                size: 20,
+                                weight: '1000'
+                            }
+                        }
+                    },
+
+                }
+            }
+        });
+
+    }
+    </script>
+
+    <script>
+      async function getQuery4(){
+          let chartStatus = Chart.getChart("myChart4");
+          if (chartStatus != undefined) {
+              chartStatus.destroy();
+          }
+
+          let response = await fetch(`/query4/`, {mode: 'cors'});
+
+          const ctx = document.getElementById('myChart4');
+
+          let json = await response.json()
+
+          let labels =  json.x
+          let values =  json.y
+
+          new Chart(ctx, {
+              type: 'doughnut',
+              data: {
+                  labels: labels,
+                  datasets: [{
+                      label: `Número  `,
+                      data: values,
+                      borderWidth: 0.5,
+                      backgroundColor: ["gray", "black"],
+                      borderColor:'#fff'
+                  }]
+              },
+              options: {
+                  responsive: true,
+
+                  scales: {
+                      y: {
+                          ticks: { color: 'black', beginAtZero: true }
+                      },
+                      x: {
+                          ticks: { color: 'black', beginAtZero: true }
+                      }
+                  },
+                  plugins: {
+
+
+                      legend: {
+                          labels: {
+                              color: 'black',
+                              title: {
+                                  display: true,
+                                  text: 'Número de accidentes por zona',
+                                  padding: {
+                                      top: 100,
+                                      bottom: 30
+                                  }
+                              },
+                              font: {
+                                  size: 20,
+                                  weight: '1000'
+                              }
+                          }
+                      },
+
+
+                  }
+              }
+          });
+
+      }
+    </script>
+
+
 </head>
-<body class ="p-5 text-black bg-gray-500" x-data="{ anio: 2018}">
-    <div class="flex flex-col">
-        <input type="text" x-model="anio">
-        <button @click="await getQuery(anio)">Haz query</button>
+
+<body class="bg-white" x-data="{ anio:2018, anio2:2019 }" >
+<h1>Análisis de Accidentes en México 2018-2021</h1>
+
+
+    <div style="display: block; height: 500px; width: 1000px; overflow:auto;">
+        <canvas id="myChart3" height="500" width="1000" ></canvas>
+        <script>getQuery3()</script>
     </div>
-    <div style="display: block; height: 400px; width: 400px;">
-        <canvas id="myChart" height="400" width="400" ></canvas>
+
+
+    <div style="display: block; height: 1000px; width: 1000px; overflow:auto;">
+        <canvas id="myChart4" height="1000" width="1000" ></canvas>
+        <script>getQuery4()</script>
     </div>
+
+    <div style="display: block; height: 1000px; width: 1000px; overflow:auto;">
+        <canvas id="myChart" height="1000" width="1000" ></canvas>
+    </div>
+
+
+     <div>
+        <label for="${anio}">Elige un año para la tabla: </label>
+        <select x-model="anio" >
+            <template x-for="anio in ['2018', '2019', '2020', '2021']">
+                <option x-text= "anio"></option>
+            </template>
+        </select>
+        <button @click="await getQuery(anio)" ></button>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+    <div style="display: block; height: 1000px; width: 1000px; overflow:auto;" >
+        <canvas id="myChart2" height="1000" width="1000" ></canvas>
+    </div>
+
+     <div>
+        <label for="${anio2}">Elige un año para la tabla: </label>
+        <select x-model="anio2" >
+            <template x-for="anio2 in ['2018', '2019', '2020', '2021']">
+                <option x-text= "anio2" @click="await getQuery2(anio2)"></option>
+            </template>
+        </select>
+    </div>
+
+
+
 </body>
+<script>getQuery(2018)</script>
+<script>getQuery2(2018)</script>
 </html>
