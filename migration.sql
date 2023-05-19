@@ -15,7 +15,7 @@ CREATE TABLE accidentes_2021(
     SUBURBANA varchar(100) not null ,
     TIPACCID varchar(100) not null,
     AUTOMOVIL varchar(50) not null ,
-    CAMPASAJ varchar(50) not null ,
+    CAMPAJ varchar(50) not null ,
     MICROBUS varchar(50) not null ,
     PASCAMION varchar(50) not null ,
     OMNIBUS varchar(50) not null ,
