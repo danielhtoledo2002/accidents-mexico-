@@ -1,4 +1,7 @@
 cargo build --release
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
    Compiling advance_data_base_project v0.1.0 (/home/danielhtoledo/advance_data_base_project)
 warning: unused import: `Error`
  --> src/main.rs:1:22
@@ -87,7 +90,7 @@ warning: variable does not need to be mutable
 warning: variable does not need to be mutable
    --> src/main.rs:332:13
     |
-332 | ...   let mut y : Vec<(i32, i32, i32, i32, i32)> = make_query::<(i32, i32, i32, i32, i32)>(format!("select  sum(condmuerto), sum(pasamuer...
+332 | ...   let mut y : Vec<(Decimal, Decimal, Decimal, Decimal, Decimal)> = make_query::<(Decimal, Decimal, Decimal, Decimal, Decimal)>(format...
     |           ----^
     |           |
     |           help: remove this `mut`
@@ -95,7 +98,7 @@ warning: variable does not need to be mutable
 warning: variable does not need to be mutable
    --> src/main.rs:345:13
     |
-345 | ...   let mut y : Vec<(i32, i32, i32, i32, i32, i32)> = make_query::<(i32,i32, i32, i32, i32, i32)>("select ANIO,  sum(condmuerto), sum(p...
+345 | ...   let mut y : Vec<(i32, Decimal, Decimal, Decimal, Decimal, Decimal)> = make_query::<(i32,Decimal, Decimal, Decimal, Decimal, Decimal...
     |           ----^
     |           |
     |           help: remove this `mut`
@@ -103,7 +106,7 @@ warning: variable does not need to be mutable
 warning: variable does not need to be mutable
    --> src/main.rs:359:13
     |
-359 | ...   let mut y : Vec<(String, i32, i32, i32, i32, i32)> = make_query::<(String,i32, i32, i32, i32, i32)>("select SEXO,  sum(condmuerto),...
+359 | ...   let mut y : Vec<(String, Decimal, Decimal, Decimal, Decimal, Decimal)> = make_query::<(String,Decimal, Decimal, Decimal, Decimal, D...
     |           ----^
     |           |
     |           help: remove this `mut`
@@ -119,7 +122,7 @@ warning: variable does not need to be mutable
 warning: variable does not need to be mutable
    --> src/main.rs:381:13
     |
-381 | ...   let mut y : Vec<(i32, i32, i32, i32, i32, i32, i32,i32, i32 , i32 , i32 , i32 ,i32)> = make_query::<(i32, i32, i32, i32, i32, i32, ...
+381 | ...   let mut y : Vec<(Decimal, Decimal, Decimal, Decimal, Decimal, Decimal, Decimal,Decimal, Decimal , Decimal , Decimal , Decimal ,Deci...
     |           ----^
     |           |
     |           help: remove this `mut`
@@ -153,9 +156,9 @@ warning: function `give_type_accident` is never used
     = note: `#[warn(dead_code)]` on by default
 
 warning: function `query10` is never used
-   --> src/main.rs:522:10
+   --> src/main.rs:521:10
     |
-522 | async fn query10(Path((anio, tyype, stat)): Path<(i32, &str, &str)>,State(state): State<Arc<Pool<MySql>>>) -> impl IntoResponse {
+521 | async fn query10(Path((tyype, anio, stat)): Path<(&str, i32,  &str)>,State(state): State<Arc<Pool<MySql>>>) -> impl IntoResponse {
     |          ^^^^^^^
 
 warning: structure field `NOM_ENTIDAD` should have a snake case name
@@ -175,90 +178,618 @@ warning: variable `NOM_ENTIDAD` should have a snake case name
 warning: structure field `AUTOMOVIL` should have a snake case name
   --> src/main.rs:97:5
    |
-97 |     AUTOMOVIL : Vec<i32>,
+97 |     AUTOMOVIL : Vec<Decimal>,
    |     ^^^^^^^^^ help: convert the identifier to snake case: `automovil`
 
 warning: structure field `CAMPASAJ` should have a snake case name
   --> src/main.rs:98:5
    |
-98 |     CAMPASAJ : Vec<i32>,
+98 |     CAMPASAJ : Vec<Decimal>,
    |     ^^^^^^^^ help: convert the identifier to snake case: `campasaj`
 
 warning: structure field `MICROBUS` should have a snake case name
   --> src/main.rs:99:5
    |
-99 |     MICROBUS: Vec<i32>,
+99 |     MICROBUS: Vec<Decimal>,
    |     ^^^^^^^^ help: convert the identifier to snake case: `microbus`
 
 warning: structure field `PASCAMION` should have a snake case name
    --> src/main.rs:100:5
     |
-100 |     PASCAMION: Vec<i32>,
+100 |     PASCAMION: Vec<Decimal>,
     |     ^^^^^^^^^ help: convert the identifier to snake case: `pascamion`
 
 warning: structure field `OMNIBUS` should have a snake case name
    --> src/main.rs:101:5
     |
-101 |     OMNIBUS: Vec<i32>,
+101 |     OMNIBUS: Vec<Decimal>,
     |     ^^^^^^^ help: convert the identifier to snake case: `omnibus`
 
 warning: structure field `TRANVIA` should have a snake case name
    --> src/main.rs:102:5
     |
-102 |     TRANVIA: Vec<i32>,
+102 |     TRANVIA: Vec<Decimal>,
     |     ^^^^^^^ help: convert the identifier to snake case: `tranvia`
 
 warning: structure field `CAMIONETA` should have a snake case name
    --> src/main.rs:103:5
     |
-103 |     CAMIONETA: Vec<i32>,
+103 |     CAMIONETA: Vec<Decimal>,
     |     ^^^^^^^^^ help: convert the identifier to snake case: `camioneta`
 
 warning: structure field `CAMION` should have a snake case name
    --> src/main.rs:104:5
     |
-104 |     CAMION: Vec<i32>,
+104 |     CAMION: Vec<Decimal>,
     |     ^^^^^^ help: convert the identifier to snake case: `camion`
 
 warning: structure field `TRACTOR` should have a snake case name
    --> src/main.rs:105:5
     |
-105 |     TRACTOR: Vec<i32>,
+105 |     TRACTOR: Vec<Decimal>,
     |     ^^^^^^^ help: convert the identifier to snake case: `tractor`
 
 warning: structure field `FERROCARRI` should have a snake case name
    --> src/main.rs:106:5
     |
-106 |     FERROCARRI: Vec<i32>,
+106 |     FERROCARRI: Vec<Decimal>,
     |     ^^^^^^^^^^ help: convert the identifier to snake case: `ferrocarri`
 
 warning: structure field `MOTOCICLET` should have a snake case name
    --> src/main.rs:107:5
     |
-107 |     MOTOCICLET: Vec<i32>,
+107 |     MOTOCICLET: Vec<Decimal>,
     |     ^^^^^^^^^^ help: convert the identifier to snake case: `motociclet`
 
 warning: structure field `BICICLETA` should have a snake case name
    --> src/main.rs:108:5
     |
-108 |     BICICLETA: Vec<i32>,
+108 |     BICICLETA: Vec<Decimal>,
     |     ^^^^^^^^^ help: convert the identifier to snake case: `bicicleta`
 
 warning: structure field `OTROVEHIC` should have a snake case name
    --> src/main.rs:109:5
     |
-109 |     OTROVEHIC: Vec<i32>,
+109 |     OTROVEHIC: Vec<Decimal>,
     |     ^^^^^^^^^ help: convert the identifier to snake case: `otrovehic`
 
-Resultado { x: ["Colisión con vehículo automotor", "Colisión con objeto fijo", "Colisión con motocicleta", "Certificado cero", "Colisión con peatón (atropellamiento)", "Salida del camino", "Volcadura", "Otro", "Colisión con ciclista", "Caída de pasajero", "Colisión con animal", "Incendio", "Colisión con ferrocarril"], y: [854370, 181489, 167089, 64780, 45313, 37175, 36010, 19555, 16702, 6584, 3800, 1042, 974] }
-Resultado { x: ["Colisión con vehículo automotor", "Colisión con objeto fijo", "Colisión con motocicleta", "Certificado cero", "Colisión con peatón (atropellamiento)", "Salida del camino", "Volcadura", "Otro", "Colisión con ciclista", "Caída de pasajero", "Colisión con animal", "Incendio", "Colisión con ferrocarril"], y: [854370, 181489, 167089, 64780, 45313, 37175, 36010, 19555, 16702, 6584, 3800, 1042, 974] }
+error: Recipe `build` was terminated on line 5 by signal 15
+cargo build --release
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on build directory
+cargo build --release
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on build directory
+error: Recipe `build` was terminated on line 5 by signal 15
+cargo build --release
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on build directory
+cargo build --release
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+   Compiling advance_data_base_project v0.1.0 (/home/danielhtoledo/advance_data_base_project)
+warning: unused import: `Error`
+ --> src/main.rs:1:22
+  |
+1 | use anyhow::{anyhow, Error, Result};
+  |                      ^^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+warning: unused import: `std::io::Write`
+ --> src/main.rs:4:5
+  |
+4 | use std::io::Write;
+  |     ^^^^^^^^^^^^^^
+
+warning: unused import: `std::time::Duration`
+ --> src/main.rs:6:5
+  |
+6 | use std::time::Duration;
+  |     ^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `tokio::time::error::Elapsed`
+  --> src/main.rs:16:5
+   |
+16 | use tokio::time::error::Elapsed;
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: variable does not need to be mutable
+   --> src/main.rs:241:13
+    |
+241 |         let mut yo: Vec<(String, Decimal)> = make_query::<(String, Decimal)>("SELECT 'Zona Rural' as rural ,SUM(total) as accidentes_rurales
+    |             ----^^
+    |             |
+    |             help: remove this `mut`
+    |
+    = note: `#[warn(unused_mut)]` on by default
+
+warning: variable does not need to be mutable
+   --> src/main.rs:259:13
+    |
+259 |         let mut y: Vec<(String, i32, i32)> = make_query::<(String, i32, i32)>("Select diasemana, id_hora, count(diasemana) as num_accidentes
+    |             ----^
+    |             |
+    |             help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> src/main.rs:276:9
+    |
+276 |     let mut y :Vec<(i32, i32)> = make_query::<(i32, i32)>("select id_hora, count(id) from atus_anual group by id_hora;", pool).await.unwr...
+    |         ----^
+    |         |
+    |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> src/main.rs:287:13
+    |
+287 | ...   let mut y :Vec<(String, i32)> = make_query::<(String, i32)>("select tipaccid, count(id)as total from atus_anual group by tipaccid o...
+    |           ----^
+    |           |
+    |           help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> src/main.rs:297:13
+    |
+297 |         let mut y: Vec<(String, i32)> = make_query::<(String, i32)>("Select sexo, count(sexo) as num_accidentes
+    |             ----^
+    |             |
+    |             help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> src/main.rs:309:13
+    |
+309 |         let mut y : Vec<(String, i32)> = make_query::<(String, i32)>("Select diasemana, count(diasemana) as num_accidentes
+    |             ----^
+    |             |
+    |             help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> src/main.rs:321:13
+    |
+321 | ...   let mut y : Vec<(i32, i32)> = make_query::<(i32, i32)>("select id_edad, count(id_edad) as total from atus_anual group by id_edad or...
+    |           ----^
+    |           |
+    |           help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> src/main.rs:332:13
+    |
+332 | ...   let mut y : Vec<(Decimal, Decimal, Decimal, Decimal, Decimal)> = make_query::<(Decimal, Decimal, Decimal, Decimal, Decimal)>(format...
+    |           ----^
+    |           |
+    |           help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> src/main.rs:345:13
+    |
+345 | ...   let mut y : Vec<(i32, Decimal, Decimal, Decimal, Decimal, Decimal)> = make_query::<(i32,Decimal, Decimal, Decimal, Decimal, Decimal...
+    |           ----^
+    |           |
+    |           help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> src/main.rs:359:13
+    |
+359 | ...   let mut y : Vec<(String, Decimal, Decimal, Decimal, Decimal, Decimal)> = make_query::<(String,Decimal, Decimal, Decimal, Decimal, D...
+    |           ----^
+    |           |
+    |           help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> src/main.rs:372:13
+    |
+372 | ...   let mut y : Vec<(String, i32)> = make_query::<(String, i32)>("select aliento, count(aliento) from atus_anual group by aliento;", po...
+    |           ----^
+    |           |
+    |           help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> src/main.rs:381:13
+    |
+381 | ...   let mut y : Vec<(Decimal, Decimal, Decimal, Decimal, Decimal, Decimal, Decimal,Decimal, Decimal , Decimal , Decimal , Decimal ,Deci...
+    |           ----^
+    |           |
+    |           help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> src/main.rs:410:13
+    |
+410 | ...   let mut y : Vec<(String, i32)> = make_query::<(String, i32)>("select causaacci, count(causaacci) from atus_anual group by causaacci...
+    |           ----^
+    |           |
+    |           help: remove this `mut`
+
+warning: unused import: `axum::handler::HandlerWithoutStateExt`
+ --> src/main.rs:9:5
+  |
+9 | use axum::handler::HandlerWithoutStateExt;
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `Connection`
+ --> src/main.rs:3:12
+  |
+3 | use sqlx::{Connection, MySql, Pool};
+  |            ^^^^^^^^^^
+
+warning: function `give_type_accident` is never used
+   --> src/main.rs:189:10
+    |
+189 | async fn give_type_accident(tyype: &str, anio : i32, state : &str, pool: &sqlx::Pool<MySql>) -> Resultado5 {
+    |          ^^^^^^^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` on by default
+
+warning: function `query10` is never used
+   --> src/main.rs:521:10
+    |
+521 | async fn query10(Path((tyype, anio, stat)): Path<(&str, i32,  &str)>,State(state): State<Arc<Pool<MySql>>>) -> impl IntoResponse {
+    |          ^^^^^^^
+
+warning: structure field `NOM_ENTIDAD` should have a snake case name
+  --> src/main.rs:26:5
+   |
+26 |     NOM_ENTIDAD: String,
+   |     ^^^^^^^^^^^ help: convert the identifier to snake case: `nom_entidad`
+   |
+   = note: `#[warn(non_snake_case)]` on by default
+
+warning: variable `NOM_ENTIDAD` should have a snake case name
+  --> src/main.rs:26:5
+   |
+26 |     NOM_ENTIDAD: String,
+   |     ^^^^^^^^^^^ help: convert the identifier to snake case: `nom_entidad`
+
+warning: structure field `AUTOMOVIL` should have a snake case name
+  --> src/main.rs:97:5
+   |
+97 |     AUTOMOVIL : Vec<Decimal>,
+   |     ^^^^^^^^^ help: convert the identifier to snake case: `automovil`
+
+warning: structure field `CAMPASAJ` should have a snake case name
+  --> src/main.rs:98:5
+   |
+98 |     CAMPASAJ : Vec<Decimal>,
+   |     ^^^^^^^^ help: convert the identifier to snake case: `campasaj`
+
+warning: structure field `MICROBUS` should have a snake case name
+  --> src/main.rs:99:5
+   |
+99 |     MICROBUS: Vec<Decimal>,
+   |     ^^^^^^^^ help: convert the identifier to snake case: `microbus`
+
+warning: structure field `PASCAMION` should have a snake case name
+   --> src/main.rs:100:5
+    |
+100 |     PASCAMION: Vec<Decimal>,
+    |     ^^^^^^^^^ help: convert the identifier to snake case: `pascamion`
+
+warning: structure field `OMNIBUS` should have a snake case name
+   --> src/main.rs:101:5
+    |
+101 |     OMNIBUS: Vec<Decimal>,
+    |     ^^^^^^^ help: convert the identifier to snake case: `omnibus`
+
+warning: structure field `TRANVIA` should have a snake case name
+   --> src/main.rs:102:5
+    |
+102 |     TRANVIA: Vec<Decimal>,
+    |     ^^^^^^^ help: convert the identifier to snake case: `tranvia`
+
+warning: structure field `CAMIONETA` should have a snake case name
+   --> src/main.rs:103:5
+    |
+103 |     CAMIONETA: Vec<Decimal>,
+    |     ^^^^^^^^^ help: convert the identifier to snake case: `camioneta`
+
+warning: structure field `CAMION` should have a snake case name
+   --> src/main.rs:104:5
+    |
+104 |     CAMION: Vec<Decimal>,
+    |     ^^^^^^ help: convert the identifier to snake case: `camion`
+
+warning: structure field `TRACTOR` should have a snake case name
+   --> src/main.rs:105:5
+    |
+105 |     TRACTOR: Vec<Decimal>,
+    |     ^^^^^^^ help: convert the identifier to snake case: `tractor`
+
+warning: structure field `FERROCARRI` should have a snake case name
+   --> src/main.rs:106:5
+    |
+106 |     FERROCARRI: Vec<Decimal>,
+    |     ^^^^^^^^^^ help: convert the identifier to snake case: `ferrocarri`
+
+warning: structure field `MOTOCICLET` should have a snake case name
+   --> src/main.rs:107:5
+    |
+107 |     MOTOCICLET: Vec<Decimal>,
+    |     ^^^^^^^^^^ help: convert the identifier to snake case: `motociclet`
+
+warning: structure field `BICICLETA` should have a snake case name
+   --> src/main.rs:108:5
+    |
+108 |     BICICLETA: Vec<Decimal>,
+    |     ^^^^^^^^^ help: convert the identifier to snake case: `bicicleta`
+
+warning: structure field `OTROVEHIC` should have a snake case name
+   --> src/main.rs:109:5
+    |
+109 |     OTROVEHIC: Vec<Decimal>,
+    |     ^^^^^^^^^ help: convert the identifier to snake case: `otrovehic`
+
+cargo build --release
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+   Compiling advance_data_base_project v0.1.0 (/home/danielhtoledo/advance_data_base_project)
+warning: unused import: `Error`
+ --> src/main.rs:1:22
+  |
+1 | use anyhow::{anyhow, Error, Result};
+  |                      ^^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+warning: unused import: `std::io::Write`
+ --> src/main.rs:4:5
+  |
+4 | use std::io::Write;
+  |     ^^^^^^^^^^^^^^
+
+warning: unused import: `std::time::Duration`
+ --> src/main.rs:6:5
+  |
+6 | use std::time::Duration;
+  |     ^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `tokio::time::error::Elapsed`
+  --> src/main.rs:16:5
+   |
+16 | use tokio::time::error::Elapsed;
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: variable does not need to be mutable
+   --> src/main.rs:241:13
+    |
+241 |         let mut yo: Vec<(String, Decimal)> = make_query::<(String, Decimal)>("SELECT 'Zona Rural' as rural ,SUM(total) as accidentes_rurales
+    |             ----^^
+    |             |
+    |             help: remove this `mut`
+    |
+    = note: `#[warn(unused_mut)]` on by default
+
+warning: variable does not need to be mutable
+   --> src/main.rs:259:13
+    |
+259 |         let mut y: Vec<(String, i32, i32)> = make_query::<(String, i32, i32)>("Select diasemana, id_hora, count(diasemana) as num_accidentes
+    |             ----^
+    |             |
+    |             help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> src/main.rs:276:9
+    |
+276 |     let mut y :Vec<(i32, i32)> = make_query::<(i32, i32)>("select id_hora, count(id) from atus_anual group by id_hora;", pool).await.unwr...
+    |         ----^
+    |         |
+    |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> src/main.rs:287:13
+    |
+287 | ...   let mut y :Vec<(String, i32)> = make_query::<(String, i32)>("select tipaccid, count(id)as total from atus_anual group by tipaccid o...
+    |           ----^
+    |           |
+    |           help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> src/main.rs:297:13
+    |
+297 |         let mut y: Vec<(String, i32)> = make_query::<(String, i32)>("Select sexo, count(sexo) as num_accidentes
+    |             ----^
+    |             |
+    |             help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> src/main.rs:309:13
+    |
+309 |         let mut y : Vec<(String, i32)> = make_query::<(String, i32)>("Select diasemana, count(diasemana) as num_accidentes
+    |             ----^
+    |             |
+    |             help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> src/main.rs:321:13
+    |
+321 | ...   let mut y : Vec<(i32, i32)> = make_query::<(i32, i32)>("select id_edad, count(id_edad) as total from atus_anual group by id_edad or...
+    |           ----^
+    |           |
+    |           help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> src/main.rs:332:13
+    |
+332 | ...   let mut y : Vec<(Decimal, Decimal, Decimal, Decimal, Decimal)> = make_query::<(Decimal, Decimal, Decimal, Decimal, Decimal)>(format...
+    |           ----^
+    |           |
+    |           help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> src/main.rs:345:13
+    |
+345 | ...   let mut y : Vec<(i32, Decimal, Decimal, Decimal, Decimal, Decimal)> = make_query::<(i32,Decimal, Decimal, Decimal, Decimal, Decimal...
+    |           ----^
+    |           |
+    |           help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> src/main.rs:359:13
+    |
+359 | ...   let mut y : Vec<(String, Decimal, Decimal, Decimal, Decimal, Decimal)> = make_query::<(String,Decimal, Decimal, Decimal, Decimal, D...
+    |           ----^
+    |           |
+    |           help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> src/main.rs:372:13
+    |
+372 | ...   let mut y : Vec<(String, i32)> = make_query::<(String, i32)>("select aliento, count(aliento) from atus_anual group by aliento;", po...
+    |           ----^
+    |           |
+    |           help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> src/main.rs:381:13
+    |
+381 | ...   let mut y : Vec<(Decimal, Decimal, Decimal, Decimal, Decimal, Decimal, Decimal,Decimal, Decimal , Decimal , Decimal , Decimal ,Deci...
+    |           ----^
+    |           |
+    |           help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> src/main.rs:410:13
+    |
+410 | ...   let mut y : Vec<(String, i32)> = make_query::<(String, i32)>("select causaacci, count(causaacci) from atus_anual group by causaacci...
+    |           ----^
+    |           |
+    |           help: remove this `mut`
+
+warning: unused import: `axum::handler::HandlerWithoutStateExt`
+ --> src/main.rs:9:5
+  |
+9 | use axum::handler::HandlerWithoutStateExt;
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `Connection`
+ --> src/main.rs:3:12
+  |
+3 | use sqlx::{Connection, MySql, Pool};
+  |            ^^^^^^^^^^
+
+warning: function `give_type_accident` is never used
+   --> src/main.rs:189:10
+    |
+189 | async fn give_type_accident(tyype: &str, anio : i32, state : &str, pool: &sqlx::Pool<MySql>) -> Resultado5 {
+    |          ^^^^^^^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` on by default
+
+warning: function `query10` is never used
+   --> src/main.rs:521:10
+    |
+521 | async fn query10(Path((tyype, anio, stat)): Path<(&str, i32,  &str)>,State(state): State<Arc<Pool<MySql>>>) -> impl IntoResponse {
+    |          ^^^^^^^
+
+warning: structure field `NOM_ENTIDAD` should have a snake case name
+  --> src/main.rs:26:5
+   |
+26 |     NOM_ENTIDAD: String,
+   |     ^^^^^^^^^^^ help: convert the identifier to snake case: `nom_entidad`
+   |
+   = note: `#[warn(non_snake_case)]` on by default
+
+warning: variable `NOM_ENTIDAD` should have a snake case name
+  --> src/main.rs:26:5
+   |
+26 |     NOM_ENTIDAD: String,
+   |     ^^^^^^^^^^^ help: convert the identifier to snake case: `nom_entidad`
+
+warning: structure field `AUTOMOVIL` should have a snake case name
+  --> src/main.rs:97:5
+   |
+97 |     AUTOMOVIL : Vec<Decimal>,
+   |     ^^^^^^^^^ help: convert the identifier to snake case: `automovil`
+
+warning: structure field `CAMPASAJ` should have a snake case name
+  --> src/main.rs:98:5
+   |
+98 |     CAMPASAJ : Vec<Decimal>,
+   |     ^^^^^^^^ help: convert the identifier to snake case: `campasaj`
+
+warning: structure field `MICROBUS` should have a snake case name
+  --> src/main.rs:99:5
+   |
+99 |     MICROBUS: Vec<Decimal>,
+   |     ^^^^^^^^ help: convert the identifier to snake case: `microbus`
+
+warning: structure field `PASCAMION` should have a snake case name
+   --> src/main.rs:100:5
+    |
+100 |     PASCAMION: Vec<Decimal>,
+    |     ^^^^^^^^^ help: convert the identifier to snake case: `pascamion`
+
+warning: structure field `OMNIBUS` should have a snake case name
+   --> src/main.rs:101:5
+    |
+101 |     OMNIBUS: Vec<Decimal>,
+    |     ^^^^^^^ help: convert the identifier to snake case: `omnibus`
+
+warning: structure field `TRANVIA` should have a snake case name
+   --> src/main.rs:102:5
+    |
+102 |     TRANVIA: Vec<Decimal>,
+    |     ^^^^^^^ help: convert the identifier to snake case: `tranvia`
+
+warning: structure field `CAMIONETA` should have a snake case name
+   --> src/main.rs:103:5
+    |
+103 |     CAMIONETA: Vec<Decimal>,
+    |     ^^^^^^^^^ help: convert the identifier to snake case: `camioneta`
+
+warning: structure field `CAMION` should have a snake case name
+   --> src/main.rs:104:5
+    |
+104 |     CAMION: Vec<Decimal>,
+    |     ^^^^^^ help: convert the identifier to snake case: `camion`
+
+warning: structure field `TRACTOR` should have a snake case name
+   --> src/main.rs:105:5
+    |
+105 |     TRACTOR: Vec<Decimal>,
+    |     ^^^^^^^ help: convert the identifier to snake case: `tractor`
+
+warning: structure field `FERROCARRI` should have a snake case name
+   --> src/main.rs:106:5
+    |
+106 |     FERROCARRI: Vec<Decimal>,
+    |     ^^^^^^^^^^ help: convert the identifier to snake case: `ferrocarri`
+
+warning: structure field `MOTOCICLET` should have a snake case name
+   --> src/main.rs:107:5
+    |
+107 |     MOTOCICLET: Vec<Decimal>,
+    |     ^^^^^^^^^^ help: convert the identifier to snake case: `motociclet`
+
+warning: structure field `BICICLETA` should have a snake case name
+   --> src/main.rs:108:5
+    |
+108 |     BICICLETA: Vec<Decimal>,
+    |     ^^^^^^^^^ help: convert the identifier to snake case: `bicicleta`
+
+warning: structure field `OTROVEHIC` should have a snake case name
+   --> src/main.rs:109:5
+    |
+109 |     OTROVEHIC: Vec<Decimal>,
+    |     ^^^^^^^^^ help: convert the identifier to snake case: `otrovehic`
+
 warning: `advance_data_base_project` (bin "advance_data_base_project") generated 36 warnings (run `cargo fix --bin "advance_data_base_project"` to apply 17 suggestions)
-    Finished release [optimized] target(s) in 15.16s
+    Finished release [optimized] target(s) in 16.14s
 sudo killall -9 advance_data_base_project
 sudo ./target/release/advance_data_base_project
-Resultado { x: ["Colisión con vehículo automotor", "Colisión con objeto fijo", "Colisión con motocicleta", "Certificado cero", "Colisión con peatón (atropellamiento)", "Salida del camino", "Volcadura", "Otro", "Colisión con ciclista", "Caída de pasajero", "Colisión con animal", "Incendio", "Colisión con ferrocarril"], y: [854370, 181489, 167089, 64780, 45313, 37175, 36010, 19555, 16702, 6584, 3800, 1042, 974] }
-Resultado { x: ["Colisión con vehículo automotor", "Colisión con objeto fijo", "Colisión con motocicleta", "Certificado cero", "Colisión con peatón (atropellamiento)", "Salida del camino", "Volcadura", "Otro", "Colisión con ciclista", "Caída de pasajero", "Colisión con animal", "Incendio", "Colisión con ferrocarril"], y: [854370, 181489, 167089, 64780, 45313, 37175, 36010, 19555, 16702, 6584, 3800, 1042, 974] }
+Killed
+error: Recipe `run` failed on line 9 with exit code 137
 cargo build --release
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
    Compiling advance_data_base_project v0.1.0 (/home/danielhtoledo/advance_data_base_project)
 warning: unused import: `Error`
  --> src/main.rs:1:22
@@ -347,7 +878,7 @@ warning: variable does not need to be mutable
 warning: variable does not need to be mutable
    --> src/main.rs:332:13
     |
-332 | ...   let mut y : Vec<(i32, i32, i32, i32, i32)> = make_query::<(i32, i32, i32, i32, i32)>(format!("select  sum(condmuerto), sum(pasamuer...
+332 | ...   let mut y : Vec<(Decimal, Decimal, Decimal, Decimal, Decimal)> = make_query::<(Decimal, Decimal, Decimal, Decimal, Decimal)>(format...
     |           ----^
     |           |
     |           help: remove this `mut`
@@ -355,7 +886,7 @@ warning: variable does not need to be mutable
 warning: variable does not need to be mutable
    --> src/main.rs:345:13
     |
-345 | ...   let mut y : Vec<(i32, i32, i32, i32, i32, i32)> = make_query::<(i32,i32, i32, i32, i32, i32)>("select ANIO,  sum(condmuerto), sum(p...
+345 | ...   let mut y : Vec<(i32, Decimal, Decimal, Decimal, Decimal, Decimal)> = make_query::<(i32,Decimal, Decimal, Decimal, Decimal, Decimal...
     |           ----^
     |           |
     |           help: remove this `mut`
@@ -363,7 +894,7 @@ warning: variable does not need to be mutable
 warning: variable does not need to be mutable
    --> src/main.rs:359:13
     |
-359 | ...   let mut y : Vec<(String, i32, i32, i32, i32, i32)> = make_query::<(String,i32, i32, i32, i32, i32)>("select SEXO,  sum(condmuerto),...
+359 | ...   let mut y : Vec<(String, Decimal, Decimal, Decimal, Decimal, Decimal)> = make_query::<(String,Decimal, Decimal, Decimal, Decimal, D...
     |           ----^
     |           |
     |           help: remove this `mut`
@@ -379,7 +910,7 @@ warning: variable does not need to be mutable
 warning: variable does not need to be mutable
    --> src/main.rs:381:13
     |
-381 | ...   let mut y : Vec<(i32, i32, i32, i32, i32, i32, i32,i32, i32 , i32 , i32 , i32 ,i32)> = make_query::<(i32, i32, i32, i32, i32, i32, ...
+381 | ...   let mut y : Vec<(Decimal, Decimal, Decimal, Decimal, Decimal, Decimal, Decimal,Decimal, Decimal , Decimal , Decimal , Decimal ,Deci...
     |           ----^
     |           |
     |           help: remove this `mut`
@@ -413,9 +944,9 @@ warning: function `give_type_accident` is never used
     = note: `#[warn(dead_code)]` on by default
 
 warning: function `query10` is never used
-   --> src/main.rs:522:10
+   --> src/main.rs:521:10
     |
-522 | async fn query10(Path((anio, tyype, stat)): Path<(i32, &str, &str)>,State(state): State<Arc<Pool<MySql>>>) -> impl IntoResponse {
+521 | async fn query10(Path((tyype, anio, stat)): Path<(&str, i32,  &str)>,State(state): State<Arc<Pool<MySql>>>) -> impl IntoResponse {
     |          ^^^^^^^
 
 warning: structure field `NOM_ENTIDAD` should have a snake case name
@@ -435,336 +966,1152 @@ warning: variable `NOM_ENTIDAD` should have a snake case name
 warning: structure field `AUTOMOVIL` should have a snake case name
   --> src/main.rs:97:5
    |
-97 |     AUTOMOVIL : Vec<i32>,
+97 |     AUTOMOVIL : Vec<Decimal>,
    |     ^^^^^^^^^ help: convert the identifier to snake case: `automovil`
 
 warning: structure field `CAMPASAJ` should have a snake case name
   --> src/main.rs:98:5
    |
-98 |     CAMPASAJ : Vec<i32>,
+98 |     CAMPASAJ : Vec<Decimal>,
    |     ^^^^^^^^ help: convert the identifier to snake case: `campasaj`
 
 warning: structure field `MICROBUS` should have a snake case name
   --> src/main.rs:99:5
    |
-99 |     MICROBUS: Vec<i32>,
+99 |     MICROBUS: Vec<Decimal>,
    |     ^^^^^^^^ help: convert the identifier to snake case: `microbus`
 
 warning: structure field `PASCAMION` should have a snake case name
    --> src/main.rs:100:5
     |
-100 |     PASCAMION: Vec<i32>,
+100 |     PASCAMION: Vec<Decimal>,
     |     ^^^^^^^^^ help: convert the identifier to snake case: `pascamion`
 
 warning: structure field `OMNIBUS` should have a snake case name
    --> src/main.rs:101:5
     |
-101 |     OMNIBUS: Vec<i32>,
+101 |     OMNIBUS: Vec<Decimal>,
     |     ^^^^^^^ help: convert the identifier to snake case: `omnibus`
 
 warning: structure field `TRANVIA` should have a snake case name
    --> src/main.rs:102:5
     |
-102 |     TRANVIA: Vec<i32>,
+102 |     TRANVIA: Vec<Decimal>,
     |     ^^^^^^^ help: convert the identifier to snake case: `tranvia`
 
 warning: structure field `CAMIONETA` should have a snake case name
    --> src/main.rs:103:5
     |
-103 |     CAMIONETA: Vec<i32>,
+103 |     CAMIONETA: Vec<Decimal>,
     |     ^^^^^^^^^ help: convert the identifier to snake case: `camioneta`
 
 warning: structure field `CAMION` should have a snake case name
    --> src/main.rs:104:5
     |
-104 |     CAMION: Vec<i32>,
+104 |     CAMION: Vec<Decimal>,
     |     ^^^^^^ help: convert the identifier to snake case: `camion`
 
 warning: structure field `TRACTOR` should have a snake case name
    --> src/main.rs:105:5
     |
-105 |     TRACTOR: Vec<i32>,
+105 |     TRACTOR: Vec<Decimal>,
     |     ^^^^^^^ help: convert the identifier to snake case: `tractor`
 
 warning: structure field `FERROCARRI` should have a snake case name
    --> src/main.rs:106:5
     |
-106 |     FERROCARRI: Vec<i32>,
+106 |     FERROCARRI: Vec<Decimal>,
     |     ^^^^^^^^^^ help: convert the identifier to snake case: `ferrocarri`
 
 warning: structure field `MOTOCICLET` should have a snake case name
    --> src/main.rs:107:5
     |
-107 |     MOTOCICLET: Vec<i32>,
+107 |     MOTOCICLET: Vec<Decimal>,
     |     ^^^^^^^^^^ help: convert the identifier to snake case: `motociclet`
 
 warning: structure field `BICICLETA` should have a snake case name
    --> src/main.rs:108:5
     |
-108 |     BICICLETA: Vec<i32>,
+108 |     BICICLETA: Vec<Decimal>,
     |     ^^^^^^^^^ help: convert the identifier to snake case: `bicicleta`
 
 warning: structure field `OTROVEHIC` should have a snake case name
    --> src/main.rs:109:5
     |
-109 |     OTROVEHIC: Vec<i32>,
+109 |     OTROVEHIC: Vec<Decimal>,
     |     ^^^^^^^^^ help: convert the identifier to snake case: `otrovehic`
 
-cargo build --release
-   Compiling advance_data_base_project v0.1.0 (/home/danielhtoledo/advance_data_base_project)
-warning: unused import: `Error`
- --> src/main.rs:1:22
-  |
-1 | use anyhow::{anyhow, Error, Result};
-  |                      ^^^^^
-  |
-  = note: `#[warn(unused_imports)]` on by default
-
-warning: unused import: `std::io::Write`
- --> src/main.rs:4:5
-  |
-4 | use std::io::Write;
-  |     ^^^^^^^^^^^^^^
-
-warning: unused import: `std::time::Duration`
- --> src/main.rs:6:5
-  |
-6 | use std::time::Duration;
-  |     ^^^^^^^^^^^^^^^^^^^
-
-warning: unused import: `tokio::time::error::Elapsed`
-  --> src/main.rs:16:5
-   |
-16 | use tokio::time::error::Elapsed;
-   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-warning: variable does not need to be mutable
-   --> src/main.rs:241:13
-    |
-241 |         let mut yo: Vec<(String, Decimal)> = make_query::<(String, Decimal)>("SELECT 'Zona Rural' as rural ,SUM(total) as accidentes_rurales
-    |             ----^^
-    |             |
-    |             help: remove this `mut`
-    |
-    = note: `#[warn(unused_mut)]` on by default
-
-warning: variable does not need to be mutable
-   --> src/main.rs:259:13
-    |
-259 |         let mut y: Vec<(String, i32, i32)> = make_query::<(String, i32, i32)>("Select diasemana, id_hora, count(diasemana) as num_accidentes
-    |             ----^
-    |             |
-    |             help: remove this `mut`
-
-warning: variable does not need to be mutable
-   --> src/main.rs:276:9
-    |
-276 |     let mut y :Vec<(i32, i32)> = make_query::<(i32, i32)>("select id_hora, count(id) from atus_anual group by id_hora;", pool).await.unwr...
-    |         ----^
-    |         |
-    |         help: remove this `mut`
-
-warning: variable does not need to be mutable
-   --> src/main.rs:287:13
-    |
-287 | ...   let mut y :Vec<(String, i32)> = make_query::<(String, i32)>("select tipaccid, count(id)as total from atus_anual group by tipaccid o...
-    |           ----^
-    |           |
-    |           help: remove this `mut`
-
-warning: variable does not need to be mutable
-   --> src/main.rs:297:13
-    |
-297 |         let mut y: Vec<(String, i32)> = make_query::<(String, i32)>("Select sexo, count(sexo) as num_accidentes
-    |             ----^
-    |             |
-    |             help: remove this `mut`
-
-warning: variable does not need to be mutable
-   --> src/main.rs:309:13
-    |
-309 |         let mut y : Vec<(String, i32)> = make_query::<(String, i32)>("Select diasemana, count(diasemana) as num_accidentes
-    |             ----^
-    |             |
-    |             help: remove this `mut`
-
-warning: variable does not need to be mutable
-   --> src/main.rs:321:13
-    |
-321 | ...   let mut y : Vec<(i32, i32)> = make_query::<(i32, i32)>("select id_edad, count(id_edad) as total from atus_anual group by id_edad or...
-    |           ----^
-    |           |
-    |           help: remove this `mut`
-
-warning: variable does not need to be mutable
-   --> src/main.rs:332:13
-    |
-332 | ...   let mut y : Vec<(i32, i32, i32, i32, i32)> = make_query::<(i32, i32, i32, i32, i32)>(format!("select  sum(condmuerto), sum(pasamuer...
-    |           ----^
-    |           |
-    |           help: remove this `mut`
-
-warning: variable does not need to be mutable
-   --> src/main.rs:345:13
-    |
-345 | ...   let mut y : Vec<(i32, i32, i32, i32, i32, i32)> = make_query::<(i32,i32, i32, i32, i32, i32)>("select ANIO,  sum(condmuerto), sum(p...
-    |           ----^
-    |           |
-    |           help: remove this `mut`
-
-warning: variable does not need to be mutable
-   --> src/main.rs:359:13
-    |
-359 | ...   let mut y : Vec<(String, i32, i32, i32, i32, i32)> = make_query::<(String,i32, i32, i32, i32, i32)>("select SEXO,  sum(condmuerto),...
-    |           ----^
-    |           |
-    |           help: remove this `mut`
-
-warning: variable does not need to be mutable
-   --> src/main.rs:372:13
-    |
-372 | ...   let mut y : Vec<(String, i32)> = make_query::<(String, i32)>("select aliento, count(aliento) from atus_anual group by aliento;", po...
-    |           ----^
-    |           |
-    |           help: remove this `mut`
-
-warning: variable does not need to be mutable
-   --> src/main.rs:381:13
-    |
-381 | ...   let mut y : Vec<(i32, i32, i32, i32, i32, i32, i32,i32, i32 , i32 , i32 , i32 ,i32)> = make_query::<(i32, i32, i32, i32, i32, i32, ...
-    |           ----^
-    |           |
-    |           help: remove this `mut`
-
-warning: variable does not need to be mutable
-   --> src/main.rs:410:13
-    |
-410 | ...   let mut y : Vec<(String, i32)> = make_query::<(String, i32)>("select causaacci, count(causaacci) from atus_anual group by causaacci...
-    |           ----^
-    |           |
-    |           help: remove this `mut`
-
-warning: unused import: `axum::handler::HandlerWithoutStateExt`
- --> src/main.rs:9:5
-  |
-9 | use axum::handler::HandlerWithoutStateExt;
-  |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-warning: unused import: `Connection`
- --> src/main.rs:3:12
-  |
-3 | use sqlx::{Connection, MySql, Pool};
-  |            ^^^^^^^^^^
-
-warning: function `give_type_accident` is never used
-   --> src/main.rs:189:10
-    |
-189 | async fn give_type_accident(tyype: &str, anio : i32, state : &str, pool: &sqlx::Pool<MySql>) -> Resultado5 {
-    |          ^^^^^^^^^^^^^^^^^^
-    |
-    = note: `#[warn(dead_code)]` on by default
-
-warning: function `query10` is never used
-   --> src/main.rs:522:10
-    |
-522 | async fn query10(Path((anio, tyype, stat)): Path<(i32, &str, &str)>,State(state): State<Arc<Pool<MySql>>>) -> impl IntoResponse {
-    |          ^^^^^^^
-
-warning: structure field `NOM_ENTIDAD` should have a snake case name
-  --> src/main.rs:26:5
-   |
-26 |     NOM_ENTIDAD: String,
-   |     ^^^^^^^^^^^ help: convert the identifier to snake case: `nom_entidad`
-   |
-   = note: `#[warn(non_snake_case)]` on by default
-
-warning: variable `NOM_ENTIDAD` should have a snake case name
-  --> src/main.rs:26:5
-   |
-26 |     NOM_ENTIDAD: String,
-   |     ^^^^^^^^^^^ help: convert the identifier to snake case: `nom_entidad`
-
-warning: structure field `AUTOMOVIL` should have a snake case name
-  --> src/main.rs:97:5
-   |
-97 |     AUTOMOVIL : Vec<i32>,
-   |     ^^^^^^^^^ help: convert the identifier to snake case: `automovil`
-
-warning: structure field `CAMPASAJ` should have a snake case name
-  --> src/main.rs:98:5
-   |
-98 |     CAMPASAJ : Vec<i32>,
-   |     ^^^^^^^^ help: convert the identifier to snake case: `campasaj`
-
-warning: structure field `MICROBUS` should have a snake case name
-  --> src/main.rs:99:5
-   |
-99 |     MICROBUS: Vec<i32>,
-   |     ^^^^^^^^ help: convert the identifier to snake case: `microbus`
-
-warning: structure field `PASCAMION` should have a snake case name
-   --> src/main.rs:100:5
-    |
-100 |     PASCAMION: Vec<i32>,
-    |     ^^^^^^^^^ help: convert the identifier to snake case: `pascamion`
-
-warning: structure field `OMNIBUS` should have a snake case name
-   --> src/main.rs:101:5
-    |
-101 |     OMNIBUS: Vec<i32>,
-    |     ^^^^^^^ help: convert the identifier to snake case: `omnibus`
-
-warning: structure field `TRANVIA` should have a snake case name
-   --> src/main.rs:102:5
-    |
-102 |     TRANVIA: Vec<i32>,
-    |     ^^^^^^^ help: convert the identifier to snake case: `tranvia`
-
-warning: structure field `CAMIONETA` should have a snake case name
-   --> src/main.rs:103:5
-    |
-103 |     CAMIONETA: Vec<i32>,
-    |     ^^^^^^^^^ help: convert the identifier to snake case: `camioneta`
-
-warning: structure field `CAMION` should have a snake case name
-   --> src/main.rs:104:5
-    |
-104 |     CAMION: Vec<i32>,
-    |     ^^^^^^ help: convert the identifier to snake case: `camion`
-
-warning: structure field `TRACTOR` should have a snake case name
-   --> src/main.rs:105:5
-    |
-105 |     TRACTOR: Vec<i32>,
-    |     ^^^^^^^ help: convert the identifier to snake case: `tractor`
-
-warning: structure field `FERROCARRI` should have a snake case name
-   --> src/main.rs:106:5
-    |
-106 |     FERROCARRI: Vec<i32>,
-    |     ^^^^^^^^^^ help: convert the identifier to snake case: `ferrocarri`
-
-warning: structure field `MOTOCICLET` should have a snake case name
-   --> src/main.rs:107:5
-    |
-107 |     MOTOCICLET: Vec<i32>,
-    |     ^^^^^^^^^^ help: convert the identifier to snake case: `motociclet`
-
-warning: structure field `BICICLETA` should have a snake case name
-   --> src/main.rs:108:5
-    |
-108 |     BICICLETA: Vec<i32>,
-    |     ^^^^^^^^^ help: convert the identifier to snake case: `bicicleta`
-
-warning: structure field `OTROVEHIC` should have a snake case name
-   --> src/main.rs:109:5
-    |
-109 |     OTROVEHIC: Vec<i32>,
-    |     ^^^^^^^^^ help: convert the identifier to snake case: `otrovehic`
-
-Resultado { x: ["Colisión con vehículo automotor", "Colisión con objeto fijo", "Colisión con motocicleta", "Certificado cero", "Colisión con peatón (atropellamiento)", "Salida del camino", "Volcadura", "Otro", "Colisión con ciclista", "Caída de pasajero", "Colisión con animal", "Incendio", "Colisión con ferrocarril"], y: [854370, 181489, 167089, 64780, 45313, 37175, 36010, 19555, 16702, 6584, 3800, 1042, 974] }
-Resultado { x: ["Colisión con vehículo automotor", "Colisión con objeto fijo", "Colisión con motocicleta", "Certificado cero", "Colisión con peatón (atropellamiento)", "Salida del camino", "Volcadura", "Otro", "Colisión con ciclista", "Caída de pasajero", "Colisión con animal", "Incendio", "Colisión con ferrocarril"], y: [854370, 181489, 167089, 64780, 45313, 37175, 36010, 19555, 16702, 6584, 3800, 1042, 974] }
 warning: `advance_data_base_project` (bin "advance_data_base_project") generated 36 warnings (run `cargo fix --bin "advance_data_base_project"` to apply 17 suggestions)
-    Finished release [optimized] target(s) in 14.84s
+    Finished release [optimized] target(s) in 15.98s
 sudo killall -9 advance_data_base_project
 sudo ./target/release/advance_data_base_project
+Resultado9 { AUTOMOVIL: [1607933], CAMPASAJ: [326288], MICROBUS: [9003], PASCAMION: [8956], OMNIBUS: [75199], TRANVIA: [135], CAMIONETA: [188644], CAMION: [58761], TRACTOR: [39407], FERROCARRI: [1277], MOTOCICLET: [228023], BICICLETA: [19432], OTROVEHIC: [32267] }
+Resultado9 { AUTOMOVIL: [1607933], CAMPASAJ: [326288], MICROBUS: [9003], PASCAMION: [8956], OMNIBUS: [75199], TRANVIA: [135], CAMIONETA: [188644], CAMION: [58761], TRACTOR: [39407], FERROCARRI: [1277], MOTOCICLET: [228023], BICICLETA: [19432], OTROVEHIC: [32267] }
+Killed
+error: Recipe `run` failed on line 9 with exit code 137
+cargo build --release
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+   Compiling advance_data_base_project v0.1.0 (/home/danielhtoledo/advance_data_base_project)
+warning: unused import: `Error`
+ --> src/main.rs:1:22
+  |
+1 | use anyhow::{anyhow, Error, Result};
+  |                      ^^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+warning: unused import: `std::io::Write`
+ --> src/main.rs:4:5
+  |
+4 | use std::io::Write;
+  |     ^^^^^^^^^^^^^^
+
+warning: unused import: `std::time::Duration`
+ --> src/main.rs:6:5
+  |
+6 | use std::time::Duration;
+  |     ^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `tokio::time::error::Elapsed`
+  --> src/main.rs:16:5
+   |
+16 | use tokio::time::error::Elapsed;
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: variable does not need to be mutable
+   --> src/main.rs:241:13
+    |
+241 |         let mut yo: Vec<(String, Decimal)> = make_query::<(String, Decimal)>("SELECT 'Zona Rural' as rural ,SUM(total) as accidentes_rurales
+    |             ----^^
+    |             |
+    |             help: remove this `mut`
+    |
+    = note: `#[warn(unused_mut)]` on by default
+
+warning: variable does not need to be mutable
+   --> src/main.rs:259:13
+    |
+259 |         let mut y: Vec<(String, i32, i32)> = make_query::<(String, i32, i32)>("Select diasemana, id_hora, count(diasemana) as num_accidentes
+    |             ----^
+    |             |
+    |             help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> src/main.rs:276:9
+    |
+276 |     let mut y :Vec<(i32, i32)> = make_query::<(i32, i32)>("select id_hora, count(id) from atus_anual group by id_hora;", pool).await.unwr...
+    |         ----^
+    |         |
+    |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> src/main.rs:287:13
+    |
+287 | ...   let mut y :Vec<(String, i32)> = make_query::<(String, i32)>("select tipaccid, count(id)as total from atus_anual group by tipaccid o...
+    |           ----^
+    |           |
+    |           help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> src/main.rs:297:13
+    |
+297 |         let mut y: Vec<(String, i32)> = make_query::<(String, i32)>("Select sexo, count(sexo) as num_accidentes
+    |             ----^
+    |             |
+    |             help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> src/main.rs:309:13
+    |
+309 |         let mut y : Vec<(String, i32)> = make_query::<(String, i32)>("Select diasemana, count(diasemana) as num_accidentes
+    |             ----^
+    |             |
+    |             help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> src/main.rs:321:13
+    |
+321 | ...   let mut y : Vec<(i32, i32)> = make_query::<(i32, i32)>("select id_edad, count(id_edad) as total from atus_anual group by id_edad or...
+    |           ----^
+    |           |
+    |           help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> src/main.rs:332:13
+    |
+332 | ...   let mut y : Vec<(Decimal, Decimal, Decimal, Decimal, Decimal)> = make_query::<(Decimal, Decimal, Decimal, Decimal, Decimal)>(format...
+    |           ----^
+    |           |
+    |           help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> src/main.rs:345:13
+    |
+345 | ...   let mut y : Vec<(i32, Decimal, Decimal, Decimal, Decimal, Decimal)> = make_query::<(i32,Decimal, Decimal, Decimal, Decimal, Decimal...
+    |           ----^
+    |           |
+    |           help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> src/main.rs:359:13
+    |
+359 | ...   let mut y : Vec<(String, Decimal, Decimal, Decimal, Decimal, Decimal)> = make_query::<(String,Decimal, Decimal, Decimal, Decimal, D...
+    |           ----^
+    |           |
+    |           help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> src/main.rs:372:13
+    |
+372 | ...   let mut y : Vec<(String, i32)> = make_query::<(String, i32)>("select aliento, count(aliento) from atus_anual group by aliento;", po...
+    |           ----^
+    |           |
+    |           help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> src/main.rs:381:13
+    |
+381 | ...   let mut y : Vec<(Decimal, Decimal, Decimal, Decimal, Decimal, Decimal, Decimal,Decimal, Decimal , Decimal , Decimal , Decimal ,Deci...
+    |           ----^
+    |           |
+    |           help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> src/main.rs:410:13
+    |
+410 | ...   let mut y : Vec<(String, i32)> = make_query::<(String, i32)>("select causaacci, count(causaacci) from atus_anual group by causaacci...
+    |           ----^
+    |           |
+    |           help: remove this `mut`
+
+warning: unused import: `axum::handler::HandlerWithoutStateExt`
+ --> src/main.rs:9:5
+  |
+9 | use axum::handler::HandlerWithoutStateExt;
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `Connection`
+ --> src/main.rs:3:12
+  |
+3 | use sqlx::{Connection, MySql, Pool};
+  |            ^^^^^^^^^^
+
+warning: function `give_type_accident` is never used
+   --> src/main.rs:189:10
+    |
+189 | async fn give_type_accident(tyype: &str, anio : i32, state : &str, pool: &sqlx::Pool<MySql>) -> Resultado5 {
+    |          ^^^^^^^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` on by default
+
+warning: function `query10` is never used
+   --> src/main.rs:521:10
+    |
+521 | async fn query10(Path((tyype, anio, stat)): Path<(&str, i32,  &str)>,State(state): State<Arc<Pool<MySql>>>) -> impl IntoResponse {
+    |          ^^^^^^^
+
+warning: structure field `NOM_ENTIDAD` should have a snake case name
+  --> src/main.rs:26:5
+   |
+26 |     NOM_ENTIDAD: String,
+   |     ^^^^^^^^^^^ help: convert the identifier to snake case: `nom_entidad`
+   |
+   = note: `#[warn(non_snake_case)]` on by default
+
+warning: variable `NOM_ENTIDAD` should have a snake case name
+  --> src/main.rs:26:5
+   |
+26 |     NOM_ENTIDAD: String,
+   |     ^^^^^^^^^^^ help: convert the identifier to snake case: `nom_entidad`
+
+warning: structure field `AUTOMOVIL` should have a snake case name
+  --> src/main.rs:97:5
+   |
+97 |     AUTOMOVIL : Vec<Decimal>,
+   |     ^^^^^^^^^ help: convert the identifier to snake case: `automovil`
+
+warning: structure field `CAMPASAJ` should have a snake case name
+  --> src/main.rs:98:5
+   |
+98 |     CAMPASAJ : Vec<Decimal>,
+   |     ^^^^^^^^ help: convert the identifier to snake case: `campasaj`
+
+warning: structure field `MICROBUS` should have a snake case name
+  --> src/main.rs:99:5
+   |
+99 |     MICROBUS: Vec<Decimal>,
+   |     ^^^^^^^^ help: convert the identifier to snake case: `microbus`
+
+warning: structure field `PASCAMION` should have a snake case name
+   --> src/main.rs:100:5
+    |
+100 |     PASCAMION: Vec<Decimal>,
+    |     ^^^^^^^^^ help: convert the identifier to snake case: `pascamion`
+
+warning: structure field `OMNIBUS` should have a snake case name
+   --> src/main.rs:101:5
+    |
+101 |     OMNIBUS: Vec<Decimal>,
+    |     ^^^^^^^ help: convert the identifier to snake case: `omnibus`
+
+warning: structure field `TRANVIA` should have a snake case name
+   --> src/main.rs:102:5
+    |
+102 |     TRANVIA: Vec<Decimal>,
+    |     ^^^^^^^ help: convert the identifier to snake case: `tranvia`
+
+warning: structure field `CAMIONETA` should have a snake case name
+   --> src/main.rs:103:5
+    |
+103 |     CAMIONETA: Vec<Decimal>,
+    |     ^^^^^^^^^ help: convert the identifier to snake case: `camioneta`
+
+warning: structure field `CAMION` should have a snake case name
+   --> src/main.rs:104:5
+    |
+104 |     CAMION: Vec<Decimal>,
+    |     ^^^^^^ help: convert the identifier to snake case: `camion`
+
+warning: structure field `TRACTOR` should have a snake case name
+   --> src/main.rs:105:5
+    |
+105 |     TRACTOR: Vec<Decimal>,
+    |     ^^^^^^^ help: convert the identifier to snake case: `tractor`
+
+warning: structure field `FERROCARRI` should have a snake case name
+   --> src/main.rs:106:5
+    |
+106 |     FERROCARRI: Vec<Decimal>,
+    |     ^^^^^^^^^^ help: convert the identifier to snake case: `ferrocarri`
+
+warning: structure field `MOTOCICLET` should have a snake case name
+   --> src/main.rs:107:5
+    |
+107 |     MOTOCICLET: Vec<Decimal>,
+    |     ^^^^^^^^^^ help: convert the identifier to snake case: `motociclet`
+
+warning: structure field `BICICLETA` should have a snake case name
+   --> src/main.rs:108:5
+    |
+108 |     BICICLETA: Vec<Decimal>,
+    |     ^^^^^^^^^ help: convert the identifier to snake case: `bicicleta`
+
+warning: structure field `OTROVEHIC` should have a snake case name
+   --> src/main.rs:109:5
+    |
+109 |     OTROVEHIC: Vec<Decimal>,
+    |     ^^^^^^^^^ help: convert the identifier to snake case: `otrovehic`
+
+warning: `advance_data_base_project` (bin "advance_data_base_project") generated 36 warnings (run `cargo fix --bin "advance_data_base_project"` to apply 17 suggestions)
+    Finished release [optimized] target(s) in 15.97s
+sudo killall -9 advance_data_base_project
+sudo ./target/release/advance_data_base_project
+Killed
+error: Recipe `run` failed on line 9 with exit code 137
+cargo build --release
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on build directory
+errorcargo build --release
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+   Compiling advance_data_base_project v0.1.0 (/home/danielhtoledo/advance_data_base_project)
+warning: unused import: `Error`
+ --> src/main.rs:1:22
+  |
+1 | use anyhow::{anyhow, Error, Result};
+  |                      ^^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+warning: unused import: `std::io::Write`
+ --> src/main.rs:4:5
+  |
+4 | use std::io::Write;
+  |     ^^^^^^^^^^^^^^
+
+warning: unused import: `std::time::Duration`
+ --> src/main.rs:6:5
+  |
+6 | use std::time::Duration;
+  |     ^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `tokio::time::error::Elapsed`
+  --> src/main.rs:16:5
+   |
+16 | use tokio::time::error::Elapsed;
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: variable does not need to be mutable
+   --> src/main.rs:241:13
+    |
+241 |         let mut yo: Vec<(String, Decimal)> = make_query::<(String, Decimal)>("SELECT 'Zona Rural' as rural ,SUM(total) as accidentes_rurales
+    |             ----^^
+    |             |
+    |             help: remove this `mut`
+    |
+    = note: `#[warn(unused_mut)]` on by default
+
+warning: variable does not need to be mutable
+   --> src/main.rs:259:13
+    |
+259 |         let mut y: Vec<(String, i32, i32)> = make_query::<(String, i32, i32)>("Select diasemana, id_hora, count(diasemana) as num_accidentes
+    |             ----^
+    |             |
+    |             help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> src/main.rs:276:9
+    |
+276 |     let mut y :Vec<(i32, i32)> = make_query::<(i32, i32)>("select id_hora, count(id) from atus_anual group by id_hora;", pool).await.unwr...
+    |         ----^
+    |         |
+    |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> src/main.rs:287:13
+    |
+287 | ...   let mut y :Vec<(String, i32)> = make_query::<(String, i32)>("select tipaccid, count(id)as total from atus_anual group by tipaccid o...
+    |           ----^
+    |           |
+    |           help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> src/main.rs:297:13
+    |
+297 |         let mut y: Vec<(String, i32)> = make_query::<(String, i32)>("Select sexo, count(sexo) as num_accidentes
+    |             ----^
+    |             |
+    |             help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> src/main.rs:309:13
+    |
+309 |         let mut y : Vec<(String, i32)> = make_query::<(String, i32)>("Select diasemana, count(diasemana) as num_accidentes
+    |             ----^
+    |             |
+    |             help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> src/main.rs:321:13
+    |
+321 | ...   let mut y : Vec<(i32, i32)> = make_query::<(i32, i32)>("select id_edad, count(id_edad) as total from atus_anual group by id_edad or...
+    |           ----^
+    |           |
+    |           help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> src/main.rs:332:13
+    |
+332 | ...   let mut y : Vec<(Decimal, Decimal, Decimal, Decimal, Decimal)> = make_query::<(Decimal, Decimal, Decimal, Decimal, Decimal)>(format...
+    |           ----^
+    |           |
+    |           help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> src/main.rs:345:13
+    |
+345 | ...   let mut y : Vec<(i32, Decimal, Decimal, Decimal, Decimal, Decimal)> = make_query::<(i32,Decimal, Decimal, Decimal, Decimal, Decimal...
+    |           ----^
+    |           |
+    |           help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> src/main.rs:359:13
+    |
+359 | ...   let mut y : Vec<(String, Decimal, Decimal, Decimal, Decimal, Decimal)> = make_query::<(String,Decimal, Decimal, Decimal, Decimal, D...
+    |           ----^
+    |           |
+    |           help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> src/main.rs:372:13
+    |
+372 | ...   let mut y : Vec<(String, i32)> = make_query::<(String, i32)>("select aliento, count(aliento) from atus_anual group by aliento;", po...
+    |           ----^
+    |           |
+    |           help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> src/main.rs:381:13
+    |
+381 | ...   let mut y : Vec<(Decimal, Decimal, Decimal, Decimal, Decimal, Decimal, Decimal,Decimal, Decimal , Decimal , Decimal , Decimal ,Deci...
+    |           ----^
+    |           |
+    |           help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> src/main.rs:410:13
+    |
+410 | ...   let mut y : Vec<(String, i32)> = make_query::<(String, i32)>("select causaacci, count(causaacci) from atus_anual group by causaacci...
+    |           ----^
+    |           |
+    |           help: remove this `mut`
+
+warning: unused import: `axum::handler::HandlerWithoutStateExt`
+ --> src/main.rs:9:5
+  |
+9 | use axum::handler::HandlerWithoutStateExt;
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `Connection`
+ --> src/main.rs:3:12
+  |
+3 | use sqlx::{Connection, MySql, Pool};
+  |            ^^^^^^^^^^
+
+warning: function `give_type_accident` is never used
+   --> src/main.rs:189:10
+    |
+189 | async fn give_type_accident(tyype: &str, anio : i32, state : &str, pool: &sqlx::Pool<MySql>) -> Resultado5 {
+    |          ^^^^^^^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` on by default
+
+warning: function `query10` is never used
+   --> src/main.rs:521:10
+    |
+521 | async fn query10(Path((tyype, anio, stat)): Path<(&str, i32,  &str)>,State(state): State<Arc<Pool<MySql>>>) -> impl IntoResponse {
+    |          ^^^^^^^
+
+warning: structure field `NOM_ENTIDAD` should have a snake case name
+  --> src/main.rs:26:5
+   |
+26 |     NOM_ENTIDAD: String,
+   |     ^^^^^^^^^^^ help: convert the identifier to snake case: `nom_entidad`
+   |
+   = note: `#[warn(non_snake_case)]` on by default
+
+warning: variable `NOM_ENTIDAD` should have a snake case name
+  --> src/main.rs:26:5
+   |
+26 |     NOM_ENTIDAD: String,
+   |     ^^^^^^^^^^^ help: convert the identifier to snake case: `nom_entidad`
+
+warning: structure field `AUTOMOVIL` should have a snake case name
+  --> src/main.rs:97:5
+   |
+97 |     AUTOMOVIL : Vec<Decimal>,
+   |     ^^^^^^^^^ help: convert the identifier to snake case: `automovil`
+
+warning: structure field `CAMPASAJ` should have a snake case name
+  --> src/main.rs:98:5
+   |
+98 |     CAMPASAJ : Vec<Decimal>,
+   |     ^^^^^^^^ help: convert the identifier to snake case: `campasaj`
+
+warning: structure field `MICROBUS` should have a snake case name
+  --> src/main.rs:99:5
+   |
+99 |     MICROBUS: Vec<Decimal>,
+   |     ^^^^^^^^ help: convert the identifier to snake case: `microbus`
+
+warning: structure field `PASCAMION` should have a snake case name
+   --> src/main.rs:100:5
+    |
+100 |     PASCAMION: Vec<Decimal>,
+    |     ^^^^^^^^^ help: convert the identifier to snake case: `pascamion`
+
+warning: structure field `OMNIBUS` should have a snake case name
+   --> src/main.rs:101:5
+    |
+101 |     OMNIBUS: Vec<Decimal>,
+    |     ^^^^^^^ help: convert the identifier to snake case: `omnibus`
+
+warning: structure field `TRANVIA` should have a snake case name
+   --> src/main.rs:102:5
+    |
+102 |     TRANVIA: Vec<Decimal>,
+    |     ^^^^^^^ help: convert the identifier to snake case: `tranvia`
+
+warning: structure field `CAMIONETA` should have a snake case name
+   --> src/main.rs:103:5
+    |
+103 |     CAMIONETA: Vec<Decimal>,
+    |     ^^^^^^^^^ help: convert the identifier to snake case: `camioneta`
+
+warning: structure field `CAMION` should have a snake case name
+   --> src/main.rs:104:5
+    |
+104 |     CAMION: Vec<Decimal>,
+    |     ^^^^^^ help: convert the identifier to snake case: `camion`
+
+warning: structure field `TRACTOR` should have a snake case name
+   --> src/main.rs:105:5
+    |
+105 |     TRACTOR: Vec<Decimal>,
+    |     ^^^^^^^ help: convert the identifier to snake case: `tractor`
+
+warning: structure field `FERROCARRI` should have a snake case name
+   --> src/main.rs:106:5
+    |
+106 |     FERROCARRI: Vec<Decimal>,
+    |     ^^^^^^^^^^ help: convert the identifier to snake case: `ferrocarri`
+
+warning: structure field `MOTOCICLET` should have a snake case name
+   --> src/main.rs:107:5
+    |
+107 |     MOTOCICLET: Vec<Decimal>,
+    |     ^^^^^^^^^^ help: convert the identifier to snake case: `motociclet`
+
+warning: structure field `BICICLETA` should have a snake case name
+   --> src/main.rs:108:5
+    |
+108 |     BICICLETA: Vec<Decimal>,
+    |     ^^^^^^^^^ help: convert the identifier to snake case: `bicicleta`
+
+warning: structure field `OTROVEHIC` should have a snake case name
+   --> src/main.rs:109:5
+    |
+109 |     OTROVEHIC: Vec<Decimal>,
+    |     ^^^^^^^^^ help: convert the identifier to snake case: `otrovehic`
+
+warning: `advance_data_base_project` (bin "advance_data_base_project") generated 36 warnings (run `cargo fix --bin "advance_data_base_project"` to apply 17 suggestions)
+    Finished release [optimized] target(s) in 16.61s
+sudo killall -9 advance_data_base_project
+sudo ./target/release/advance_data_base_project
+Killed
+error: Recipe `run` failed on line 9 with exit code 137
+cargo build --release
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on build directory
+cargo build --release
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on build directory
+warning: unused import: `Error`
+ --> src/main.rs:1:22
+  |
+1 | use anyhow::{anyhow, Error, Result};
+  |                      ^^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+warning: unused import: `std::io::Write`
+ --> src/main.rs:4:5
+  |
+4 | use std::io::Write;
+  |     ^^^^^^^^^^^^^^
+
+warning: unused import: `std::time::Duration`
+ --> src/main.rs:6:5
+  |
+6 | use std::time::Duration;
+  |     ^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `tokio::time::error::Elapsed`
+  --> src/main.rs:16:5
+   |
+16 | use tokio::time::error::Elapsed;
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: variable does not need to be mutable
+   --> src/main.rs:241:13
+    |
+241 |         let mut yo: Vec<(String, Decimal)> = make_query::<(String, Decimal)>("SELECT 'Zona Rural' as rural ,SUM(total) as accidentes_rurales
+    |             ----^^
+    |             |
+    |             help: remove this `mut`
+    |
+    = note: `#[warn(unused_mut)]` on by default
+
+warning: variable does not need to be mutable
+   --> src/main.rs:259:13
+    |
+259 |         let mut y: Vec<(String, i32, i32)> = make_query::<(String, i32, i32)>("Select diasemana, id_hora, count(diasemana) as num_accidentes
+    |             ----^
+    |             |
+    |             help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> src/main.rs:276:9
+    |
+276 |     let mut y :Vec<(i32, i32)> = make_query::<(i32, i32)>("select id_hora, count(id) from atus_anual group by id_hora;", pool).await.unwr...
+    |         ----^
+    |         |
+    |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> src/main.rs:287:13
+    |
+287 | ...   let mut y :Vec<(String, i32)> = make_query::<(String, i32)>("select tipaccid, count(id)as total from atus_anual group by tipaccid o...
+    |           ----^
+    |           |
+    |           help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> src/main.rs:297:13
+    |
+297 |         let mut y: Vec<(String, i32)> = make_query::<(String, i32)>("Select sexo, count(sexo) as num_accidentes
+    |             ----^
+    |             |
+    |             help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> src/main.rs:309:13
+    |
+309 |         let mut y : Vec<(String, i32)> = make_query::<(String, i32)>("Select diasemana, count(diasemana) as num_accidentes
+    |             ----^
+    |             |
+    |             help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> src/main.rs:321:13
+    |
+321 | ...   let mut y : Vec<(i32, i32)> = make_query::<(i32, i32)>("select id_edad, count(id_edad) as total from atus_anual group by id_edad or...
+    |           ----^
+    |           |
+    |           help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> src/main.rs:332:13
+    |
+332 | ...   let mut y : Vec<(Decimal, Decimal, Decimal, Decimal, Decimal)> = make_query::<(Decimal, Decimal, Decimal, Decimal, Decimal)>(format...
+    |           ----^
+    |           |
+    |           help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> src/main.rs:345:13
+    |
+345 | ...   let mut y : Vec<(i32, Decimal, Decimal, Decimal, Decimal, Decimal)> = make_query::<(i32,Decimal, Decimal, Decimal, Decimal, Decimal...
+    |           ----^
+    |           |
+    |           help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> src/main.rs:359:13
+    |
+359 | ...   let mut y : Vec<(String, Decimal, Decimal, Decimal, Decimal, Decimal)> = make_query::<(String,Decimal, Decimal, Decimal, Decimal, D...
+    |           ----^
+    |           |
+    |           help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> src/main.rs:372:13
+    |
+372 | ...   let mut y : Vec<(String, i32)> = make_query::<(String, i32)>("select aliento, count(aliento) from atus_anual group by aliento;", po...
+    |           ----^
+    |           |
+    |           help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> src/main.rs:381:13
+    |
+381 | ...   let mut y : Vec<(Decimal, Decimal, Decimal, Decimal, Decimal, Decimal, Decimal,Decimal, Decimal , Decimal , Decimal , Decimal ,Deci...
+    |           ----^
+    |           |
+    |           help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> src/main.rs:410:13
+    |
+410 | ...   let mut y : Vec<(String, i32)> = make_query::<(String, i32)>("select causaacci, count(causaacci) from atus_anual group by causaacci...
+    |           ----^
+    |           |
+    |           help: remove this `mut`
+
+warning: unused import: `axum::handler::HandlerWithoutStateExt`
+ --> src/main.rs:9:5
+  |
+9 | use axum::handler::HandlerWithoutStateExt;
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `Connection`
+ --> src/main.rs:3:12
+  |
+3 | use sqlx::{Connection, MySql, Pool};
+  |            ^^^^^^^^^^
+
+warning: function `give_type_accident` is never used
+   --> src/main.rs:189:10
+    |
+189 | async fn give_type_accident(tyype: &str, anio : i32, state : &str, pool: &sqlx::Pool<MySql>) -> Resultado5 {
+    |          ^^^^^^^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` on by default
+
+warning: function `query10` is never used
+   --> src/main.rs:521:10
+    |
+521 | async fn query10(Path((tyype, anio, stat)): Path<(&str, i32,  &str)>,State(state): State<Arc<Pool<MySql>>>) -> impl IntoResponse {
+    |          ^^^^^^^
+
+warning: structure field `NOM_ENTIDAD` should have a snake case name
+  --> src/main.rs:26:5
+   |
+26 |     NOM_ENTIDAD: String,
+   |     ^^^^^^^^^^^ help: convert the identifier to snake case: `nom_entidad`
+   |
+   = note: `#[warn(non_snake_case)]` on by default
+
+warning: variable `NOM_ENTIDAD` should have a snake case name
+  --> src/main.rs:26:5
+   |
+26 |     NOM_ENTIDAD: String,
+   |     ^^^^^^^^^^^ help: convert the identifier to snake case: `nom_entidad`
+
+warning: structure field `AUTOMOVIL` should have a snake case name
+  --> src/main.rs:97:5
+   |
+97 |     AUTOMOVIL : Vec<Decimal>,
+   |     ^^^^^^^^^ help: convert the identifier to snake case: `automovil`
+
+warning: structure field `CAMPASAJ` should have a snake case name
+  --> src/main.rs:98:5
+   |
+98 |     CAMPASAJ : Vec<Decimal>,
+   |     ^^^^^^^^ help: convert the identifier to snake case: `campasaj`
+
+warning: structure field `MICROBUS` should have a snake case name
+  --> src/main.rs:99:5
+   |
+99 |     MICROBUS: Vec<Decimal>,
+   |     ^^^^^^^^ help: convert the identifier to snake case: `microbus`
+
+warning: structure field `PASCAMION` should have a snake case name
+   --> src/main.rs:100:5
+    |
+100 |     PASCAMION: Vec<Decimal>,
+    |     ^^^^^^^^^ help: convert the identifier to snake case: `pascamion`
+
+warning: structure field `OMNIBUS` should have a snake case name
+   --> src/main.rs:101:5
+    |
+101 |     OMNIBUS: Vec<Decimal>,
+    |     ^^^^^^^ help: convert the identifier to snake case: `omnibus`
+
+warning: structure field `TRANVIA` should have a snake case name
+   --> src/main.rs:102:5
+    |
+102 |     TRANVIA: Vec<Decimal>,
+    |     ^^^^^^^ help: convert the identifier to snake case: `tranvia`
+
+warning: structure field `CAMIONETA` should have a snake case name
+   --> src/main.rs:103:5
+    |
+103 |     CAMIONETA: Vec<Decimal>,
+    |     ^^^^^^^^^ help: convert the identifier to snake case: `camioneta`
+
+warning: structure field `CAMION` should have a snake case name
+   --> src/main.rs:104:5
+    |
+104 |     CAMION: Vec<Decimal>,
+    |     ^^^^^^ help: convert the identifier to snake case: `camion`
+
+warning: structure field `TRACTOR` should have a snake case name
+   --> src/main.rs:105:5
+    |
+105 |     TRACTOR: Vec<Decimal>,
+    |     ^^^^^^^ help: convert the identifier to snake case: `tractor`
+
+warning: structure field `FERROCARRI` should have a snake case name
+   --> src/main.rs:106:5
+    |
+106 |     FERROCARRI: Vec<Decimal>,
+    |     ^^^^^^^^^^ help: convert the identifier to snake case: `ferrocarri`
+
+warning: structure field `MOTOCICLET` should have a snake case name
+   --> src/main.rs:107:5
+    |
+107 |     MOTOCICLET: Vec<Decimal>,
+    |     ^^^^^^^^^^ help: convert the identifier to snake case: `motociclet`
+
+warning: structure field `BICICLETA` should have a snake case name
+   --> src/main.rs:108:5
+    |
+108 |     BICICLETA: Vec<Decimal>,
+    |     ^^^^^^^^^ help: convert the identifier to snake case: `bicicleta`
+
+warning: structure field `OTROVEHIC` should have a snake case name
+   --> src/main.rs:109:5
+    |
+109 |     OTROVEHIC: Vec<Decimal>,
+    |     ^^^^^^^^^ help: convert the identifier to snake case: `otrovehic`
+
+warning: `advance_data_base_project` (bin "advance_data_base_project") generated 36 warnings (run `cargo fix --bin "advance_data_base_project"` to apply 17 suggestions)
+    Finished release [optimized] target(s) in 16.04s
+sudo killall -9 advance_data_base_project
+sudo ./target/release/advance_data_base_project
+cargo build --release
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on build directory
+error: Recipe `build` was terminated on line 5 by signal 15
+cargo build --release
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on build directory
+error: Recipe `build` was terminated on line 5 by signal 15
+cargo build --release
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+   Compiling advance_data_base_project v0.1.0 (/home/danielhtoledo/advance_data_base_project)
+warning: unused import: `Error`
+ --> src/main.rs:1:22
+  |
+1 | use anyhow::{anyhow, Error, Result};
+  |                      ^^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+warning: unused import: `std::io::Write`
+ --> src/main.rs:4:5
+  |
+4 | use std::io::Write;
+  |     ^^^^^^^^^^^^^^
+
+warning: unused import: `std::time::Duration`
+ --> src/main.rs:6:5
+  |
+6 | use std::time::Duration;
+  |     ^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `tokio::time::error::Elapsed`
+  --> src/main.rs:16:5
+   |
+16 | use tokio::time::error::Elapsed;
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: variable does not need to be mutable
+   --> src/main.rs:241:13
+    |
+241 |         let mut yo: Vec<(String, Decimal)> = make_query::<(String, Decimal)>("SELECT 'Zona Rural' as rural ,SUM(total) as accidentes_rurales
+    |             ----^^
+    |             |
+    |             help: remove this `mut`
+    |
+    = note: `#[warn(unused_mut)]` on by default
+
+warning: variable does not need to be mutable
+   --> src/main.rs:259:13
+    |
+259 |         let mut y: Vec<(String, i32, i32)> = make_query::<(String, i32, i32)>("Select diasemana, id_hora, count(diasemana) as num_accidentes
+    |             ----^
+    |             |
+    |             help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> src/main.rs:276:9
+    |
+276 |     let mut y :Vec<(i32, i32)> = make_query::<(i32, i32)>("select id_hora, count(id) from atus_anual group by id_hora;", pool).await.unwr...
+    |         ----^
+    |         |
+    |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> src/main.rs:287:13
+    |
+287 | ...   let mut y :Vec<(String, i32)> = make_query::<(String, i32)>("select tipaccid, count(id)as total from atus_anual group by tipaccid o...
+    |           ----^
+    |           |
+    |           help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> src/main.rs:297:13
+    |
+297 |         let mut y: Vec<(String, i32)> = make_query::<(String, i32)>("Select sexo, count(sexo) as num_accidentes
+    |             ----^
+    |             |
+    |             help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> src/main.rs:309:13
+    |
+309 |         let mut y : Vec<(String, i32)> = make_query::<(String, i32)>("Select diasemana, count(diasemana) as num_accidentes
+    |             ----^
+    |             |
+    |             help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> src/main.rs:321:13
+    |
+321 | ...   let mut y : Vec<(i32, i32)> = make_query::<(i32, i32)>("select id_edad, count(id_edad) as total from atus_anual group by id_edad or...
+    |           ----^
+    |           |
+    |           help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> src/main.rs:332:13
+    |
+332 | ...   let mut y : Vec<(Decimal, Decimal, Decimal, Decimal, Decimal)> = make_query::<(Decimal, Decimal, Decimal, Decimal, Decimal)>(format...
+    |           ----^
+    |           |
+    |           help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> src/main.rs:345:13
+    |
+345 | ...   let mut y : Vec<(i32, Decimal, Decimal, Decimal, Decimal, Decimal)> = make_query::<(i32,Decimal, Decimal, Decimal, Decimal, Decimal...
+    |           ----^
+    |           |
+    |           help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> src/main.rs:359:13
+    |
+359 | ...   let mut y : Vec<(String, Decimal, Decimal, Decimal, Decimal, Decimal)> = make_query::<(String,Decimal, Decimal, Decimal, Decimal, D...
+    |           ----^
+    |           |
+    |           help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> src/main.rs:372:13
+    |
+372 | ...   let mut y : Vec<(String, i32)> = make_query::<(String, i32)>("select aliento, count(aliento) from atus_anual group by aliento;", po...
+    |           ----^
+    |           |
+    |           help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> src/main.rs:381:13
+    |
+381 | ...   let mut y : Vec<(Decimal, Decimal, Decimal, Decimal, Decimal, Decimal, Decimal,Decimal, Decimal , Decimal , Decimal , Decimal ,Deci...
+    |           ----^
+    |           |
+    |           help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> src/main.rs:410:13
+    |
+410 | ...   let mut y : Vec<(String, i32)> = make_query::<(String, i32)>("select causaacci, count(causaacci) from atus_anual group by causaacci...
+    |           ----^
+    |           |
+    |           help: remove this `mut`
+
+warning: unused import: `axum::handler::HandlerWithoutStateExt`
+ --> src/main.rs:9:5
+  |
+9 | use axum::handler::HandlerWithoutStateExt;
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `Connection`
+ --> src/main.rs:3:12
+  |
+3 | use sqlx::{Connection, MySql, Pool};
+  |            ^^^^^^^^^^
+
+warning: function `give_type_accident` is never used
+   --> src/main.rs:189:10
+    |
+189 | async fn give_type_accident(tyype: &str, anio : i32, state : &str, pool: &sqlx::Pool<MySql>) -> Resultado5 {
+    |          ^^^^^^^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` on by default
+
+warning: function `query10` is never used
+   --> src/main.rs:521:10
+    |
+521 | async fn query10(Path((tyype, anio, stat)): Path<(&str, i32,  &str)>,State(state): State<Arc<Pool<MySql>>>) -> impl IntoResponse {
+    |          ^^^^^^^
+
+warning: structure field `NOM_ENTIDAD` should have a snake case name
+  --> src/main.rs:26:5
+   |
+26 |     NOM_ENTIDAD: String,
+   |     ^^^^^^^^^^^ help: convert the identifier to snake case: `nom_entidad`
+   |
+   = note: `#[warn(non_snake_case)]` on by default
+
+warning: variable `NOM_ENTIDAD` should have a snake case name
+  --> src/main.rs:26:5
+   |
+26 |     NOM_ENTIDAD: String,
+   |     ^^^^^^^^^^^ help: convert the identifier to snake case: `nom_entidad`
+
+warning: structure field `AUTOMOVIL` should have a snake case name
+  --> src/main.rs:97:5
+   |
+97 |     AUTOMOVIL : Vec<Decimal>,
+   |     ^^^^^^^^^ help: convert the identifier to snake case: `automovil`
+
+warning: structure field `CAMPASAJ` should have a snake case name
+  --> src/main.rs:98:5
+   |
+98 |     CAMPASAJ : Vec<Decimal>,
+   |     ^^^^^^^^ help: convert the identifier to snake case: `campasaj`
+
+warning: structure field `MICROBUS` should have a snake case name
+  --> src/main.rs:99:5
+   |
+99 |     MICROBUS: Vec<Decimal>,
+   |     ^^^^^^^^ help: convert the identifier to snake case: `microbus`
+
+warning: structure field `PASCAMION` should have a snake case name
+   --> src/main.rs:100:5
+    |
+100 |     PASCAMION: Vec<Decimal>,
+    |     ^^^^^^^^^ help: convert the identifier to snake case: `pascamion`
+
+warning: structure field `OMNIBUS` should have a snake case name
+   --> src/main.rs:101:5
+    |
+101 |     OMNIBUS: Vec<Decimal>,
+    |     ^^^^^^^ help: convert the identifier to snake case: `omnibus`
+
+warning: structure field `TRANVIA` should have a snake case name
+   --> src/main.rs:102:5
+    |
+102 |     TRANVIA: Vec<Decimal>,
+    |     ^^^^^^^ help: convert the identifier to snake case: `tranvia`
+
+warning: structure field `CAMIONETA` should have a snake case name
+   --> src/main.rs:103:5
+    |
+103 |     CAMIONETA: Vec<Decimal>,
+    |     ^^^^^^^^^ help: convert the identifier to snake case: `camioneta`
+
+warning: structure field `CAMION` should have a snake case name
+   --> src/main.rs:104:5
+    |
+104 |     CAMION: Vec<Decimal>,
+    |     ^^^^^^ help: convert the identifier to snake case: `camion`
+
+warning: structure field `TRACTOR` should have a snake case name
+   --> src/main.rs:105:5
+    |
+105 |     TRACTOR: Vec<Decimal>,
+    |     ^^^^^^^ help: convert the identifier to snake case: `tractor`
+
+warning: structure field `FERROCARRI` should have a snake case name
+   --> src/main.rs:106:5
+    |
+106 |     FERROCARRI: Vec<Decimal>,
+    |     ^^^^^^^^^^ help: convert the identifier to snake case: `ferrocarri`
+
+warning: structure field `MOTOCICLET` should have a snake case name
+   --> src/main.rs:107:5
+    |
+107 |     MOTOCICLET: Vec<Decimal>,
+    |     ^^^^^^^^^^ help: convert the identifier to snake case: `motociclet`
+
+warning: structure field `BICICLETA` should have a snake case name
+   --> src/main.rs:108:5
+    |
+108 |     BICICLETA: Vec<Decimal>,
+    |     ^^^^^^^^^ help: convert the identifier to snake case: `bicicleta`
+
+warning: structure field `OTROVEHIC` should have a snake case name
+   --> src/main.rs:109:5
+    |
+109 |     OTROVEHIC: Vec<Decimal>,
+    |     ^^^^^^^^^ help: convert the identifier to snake case: `otrovehic`
+
+Resultado9 { AUTOMOVIL: [1607933], CAMPASAJ: [326288], MICROBUS: [9003], PASCAMION: [8956], OMNIBUS: [75199], TRANVIA: [135], CAMIONETA: [188644], CAMION: [58761], TRACTOR: [39407], FERROCARRI: [1277], MOTOCICLET: [228023], BICICLETA: [19432], OTROVEHIC: [32267] }
+Resultado9 { AUTOMOVIL: [1607933], CAMPASAJ: [326288], MICROBUS: [9003], PASCAMION: [8956], OMNIBUS: [75199], TRANVIA: [135], CAMIONETA: [188644], CAMION: [58761], TRACTOR: [39407], FERROCARRI: [1277], MOTOCICLET: [228023], BICICLETA: [19432], OTROVEHIC: [32267] }
+warning: `advance_data_base_project` (bin "advance_data_base_project") generated 36 warnings (run `cargo fix --bin "advance_data_base_project"` to apply 17 suggestions)
+    Finished release [optimized] target(s) in 16.56s
+sudo killall -9 advance_data_base_project
+sudo ./target/release/advance_data_base_project
+Killed
+error: Recipe `run` failed on line 9 with exit code 137

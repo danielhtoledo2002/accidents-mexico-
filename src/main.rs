@@ -62,51 +62,51 @@ struct Resultado5 {
 #[derive(Debug, Serialize, Deserialize, Clone)]
 struct Resultado6 {
 
-    conduc : Vec<i32>,
-    pasajero: Vec<i32>,
-    peaton: Vec<i32>,
-    ciclista: Vec<i32>,
-    otro: Vec<i32>,
+    conduc : Vec<Decimal>,
+    pasajero: Vec<Decimal>,
+    peaton: Vec<Decimal>,
+    ciclista: Vec<Decimal>,
+    otro: Vec<Decimal>,
 
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
 struct Resultado7 {
     sexo : Vec<String>,
-    conduc : Vec<i32>,
-    pasajero: Vec<i32>,
-    peaton: Vec<i32>,
-    ciclista: Vec<i32>,
-    otro: Vec<i32>,
+    conduc : Vec<Decimal>,
+    pasajero: Vec<Decimal>,
+    peaton: Vec<Decimal>,
+    ciclista: Vec<Decimal>,
+    otro: Vec<Decimal>,
 
 }
 #[derive(Debug, Serialize, Deserialize, Clone)]
 struct Resultado8 {
     anio : Vec<i32>,
-    conduc : Vec<i32>,
-    pasajero: Vec<i32>,
-    peaton: Vec<i32>,
-    ciclista: Vec<i32>,
-    otro: Vec<i32>,
+    conduc : Vec<Decimal>,
+    pasajero: Vec<Decimal>,
+    peaton: Vec<Decimal>,
+    ciclista: Vec<Decimal>,
+    otro: Vec<Decimal>,
 
 }
 
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
 struct Resultado9 {
-    AUTOMOVIL : Vec<i32>,
-    CAMPASAJ : Vec<i32>,
-    MICROBUS: Vec<i32>,
-    PASCAMION: Vec<i32>,
-    OMNIBUS: Vec<i32>,
-    TRANVIA: Vec<i32>,
-    CAMIONETA: Vec<i32>,
-    CAMION: Vec<i32>,
-    TRACTOR: Vec<i32>,
-    FERROCARRI: Vec<i32>,
-    MOTOCICLET: Vec<i32>,
-    BICICLETA: Vec<i32>,
-    OTROVEHIC: Vec<i32>,
+    AUTOMOVIL : Vec<Decimal>,
+    CAMPASAJ : Vec<Decimal>,
+    MICROBUS: Vec<Decimal>,
+    PASCAMION: Vec<Decimal>,
+    OMNIBUS: Vec<Decimal>,
+    TRANVIA: Vec<Decimal>,
+    CAMIONETA: Vec<Decimal>,
+    CAMION: Vec<Decimal>,
+    TRACTOR: Vec<Decimal>,
+    FERROCARRI: Vec<Decimal>,
+    MOTOCICLET: Vec<Decimal>,
+    BICICLETA: Vec<Decimal>,
+    OTROVEHIC: Vec<Decimal>,
 
 
 
@@ -329,7 +329,7 @@ async fn give_age_accidents(pool: &sqlx::Pool<MySql>) -> Resultado2{
 
 // /fatal/solo daños/ no fatal/solo daños /certificacion 0 por año (agregar boton para cambar de año)
 async fn give_total_result_accident(anio : i32,pool: &sqlx::Pool<MySql>) -> Resultado6{
-        let mut y : Vec<(i32, i32, i32, i32, i32)> = make_query::<(i32, i32, i32, i32, i32)>(format!("select  sum(condmuerto), sum(pasamuerto), sum(peatmuerto), sum(ciclmuerto), sum(otromuerto)
+        let mut y : Vec<(Decimal, Decimal, Decimal, Decimal, Decimal)> = make_query::<(Decimal, Decimal, Decimal, Decimal, Decimal)>(format!("select  sum(condmuerto), sum(pasamuerto), sum(peatmuerto), sum(ciclmuerto), sum(otromuerto)
         from atus_anual where anio = {0};", anio), pool).await.unwrap();
         Resultado6{
             conduc :y.iter().map(|a| a.0).collect(),
@@ -342,7 +342,7 @@ async fn give_total_result_accident(anio : i32,pool: &sqlx::Pool<MySql>) -> Resu
 
 // te da el numero de muertos por cada accidente o tipo
 async fn give_general_deads(pool: &sqlx::Pool<MySql>) -> Resultado8{
-        let mut y : Vec<(i32, i32, i32, i32, i32, i32)> = make_query::<(i32,i32, i32, i32, i32, i32)>("select ANIO,  sum(condmuerto), sum(pasamuerto), sum(peatmuerto), sum(ciclmuerto), sum(otromuerto)
+        let mut y : Vec<(i32, Decimal, Decimal, Decimal, Decimal, Decimal)> = make_query::<(i32,Decimal, Decimal, Decimal, Decimal, Decimal)>("select ANIO,  sum(condmuerto), sum(pasamuerto), sum(peatmuerto), sum(ciclmuerto), sum(otromuerto)
         from atus_anual  group by ANIO;", pool).await.unwrap();
         Resultado8{
             anio: y.iter().map(|a| a.0).collect(),
@@ -356,7 +356,7 @@ async fn give_general_deads(pool: &sqlx::Pool<MySql>) -> Resultado8{
 
 // te da la muertes por sexo en accidente auto/ pasajero etc
 async fn give_general_deads_sexo(pool: &sqlx::Pool<MySql>) -> Resultado7{
-        let mut y : Vec<(String, i32, i32, i32, i32, i32)> = make_query::<(String,i32, i32, i32, i32, i32)>("select SEXO,  sum(condmuerto), sum(pasamuerto), sum(peatmuerto), sum(ciclmuerto), sum(otromuerto)
+        let mut y : Vec<(String, Decimal, Decimal, Decimal, Decimal, Decimal)> = make_query::<(String,Decimal, Decimal, Decimal, Decimal, Decimal)>("select SEXO,  sum(condmuerto), sum(pasamuerto), sum(peatmuerto), sum(ciclmuerto), sum(otromuerto)
         from atus_anual WHERE SEXO != 'Certificado cero' group by SEXO;", pool).await.unwrap();
         Resultado7{
             sexo: y.iter().map(|a| a.0.clone()).collect(),
@@ -378,7 +378,7 @@ async fn give_aliento_noaliento(pool: &sqlx::Pool<MySql>) -> Resultado{
 
 // query de vehiculos chocados
 async fn give_sum_vehicles(pool: &sqlx::Pool<MySql>) -> Resultado9{
-        let mut y : Vec<(i32, i32, i32, i32, i32, i32, i32,i32, i32 , i32 , i32 , i32 ,i32)> = make_query::<(i32, i32, i32, i32, i32, i32, i32,i32, i32 , i32 , i32 , i32 ,i32)>("Select sum(AUTOMOVIL) as auto, sum(CAMPASAJ) as camion,
+        let mut y : Vec<(Decimal, Decimal, Decimal, Decimal, Decimal, Decimal, Decimal,Decimal, Decimal , Decimal , Decimal , Decimal ,Decimal)> = make_query::<(Decimal, Decimal, Decimal, Decimal, Decimal, Decimal, Decimal,Decimal, Decimal , Decimal , Decimal , Decimal ,Decimal)>("Select sum(AUTOMOVIL) as auto, sum(CAMPASAJ) as camion,
 sum(MICROBUS) as microbus, sum(OMNIBUS)as omnibus,
 sum(PASCAMION) as camion_pasajeros, sum(TRANVIA) as tranvia,
 sum(CAMIONETA) as camioneta, sum(CAMION)as camion,
@@ -480,7 +480,6 @@ async fn query5(State(state): State<Arc<Pool<MySql>>>) -> impl IntoResponse {
 async fn query6(State(state): State<Arc<Pool<MySql>>>) -> impl IntoResponse {
 
     let msg = give_types_accidents(&state).await;
-    println!("{:?}", msg);
     let mut response = (StatusCode::OK, serde_json::to_string(&msg).unwrap()).into_response();
     response.headers_mut().append(ACCESS_CONTROL_ALLOW_ORIGIN, HeaderValue::from_static("*"));
     response.headers_mut().append(ACCESS_CONTROL_ALLOW_HEADERS, HeaderValue::from_static("*"));
@@ -519,8 +518,8 @@ async fn query9(State(state): State<Arc<Pool<MySql>>>) -> impl IntoResponse {
         response
     }
 
-async fn query10(Path((anio, tyype, stat)): Path<(i32, &str, &str)>,State(state): State<Arc<Pool<MySql>>>) -> impl IntoResponse {
-        let msg = give_type_accident(tyype, anio, stat ,&state).await;
+async fn query10(Path((tyype, anio, stat)): Path<(&str, i32,  &str)>,State(state): State<Arc<Pool<MySql>>>) -> impl IntoResponse {
+    let msg = give_type_accident( tyype, anio, stat ,&state).await;
         let mut response = (StatusCode::OK, serde_json::to_string(&msg).unwrap()).into_response();
         response.headers_mut().append(ACCESS_CONTROL_ALLOW_ORIGIN, HeaderValue::from_static("*"));
         response.headers_mut().append(ACCESS_CONTROL_ALLOW_HEADERS, HeaderValue::from_static("*"));
@@ -541,6 +540,8 @@ async fn query11(State(state): State<Arc<Pool<MySql>>>) -> impl IntoResponse {
 
 async fn query12(Path(anio): Path<i32>,State(state): State<Arc<Pool<MySql>>>) -> impl IntoResponse {
         let msg = give_total_result_accident(anio, &state).await;
+
+
         let mut response = (StatusCode::OK, serde_json::to_string(&msg).unwrap()).into_response();
         response.headers_mut().append(ACCESS_CONTROL_ALLOW_ORIGIN, HeaderValue::from_static("*"));
         response.headers_mut().append(ACCESS_CONTROL_ALLOW_HEADERS, HeaderValue::from_static("*"));
@@ -578,6 +579,8 @@ async fn query15(State(state): State<Arc<Pool<MySql>>>) -> impl IntoResponse {
 
 async fn query16(State(state): State<Arc<Pool<MySql>>>) -> impl IntoResponse {
     let msg = give_sum_vehicles(&state).await;
+    println!("{:?}", msg);
+    println!("{:?}", msg);
     let mut response = (StatusCode::OK, serde_json::to_string(&msg).unwrap()).into_response();
     response.headers_mut().append(ACCESS_CONTROL_ALLOW_ORIGIN, HeaderValue::from_static("*"));
     response.headers_mut().append(ACCESS_CONTROL_ALLOW_HEADERS, HeaderValue::from_static("*"));
@@ -636,6 +639,7 @@ async fn main() {
         .route("/query7/", get(query7))
         .route("/query8/", get(query8))
         .route("/query9/", get(query9))
+       // .route("/query10/:tyype/:anio/:stat", get(query10))
         .route("/query11/", get(query11))
         .route("/query12/:anio", get(query12))
         .route("/query13/", get(query13))
