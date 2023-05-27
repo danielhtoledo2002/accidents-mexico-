@@ -330,7 +330,7 @@ async fn give_age_accidents(pool: &sqlx::Pool<MySql>) -> Resultado2{
 // /fatal/solo daños/ no fatal/solo daños /certificacion 0 por año (agregar boton para cambar de año)
 async fn give_total_result_accident(anio : i32,pool: &sqlx::Pool<MySql>) -> Resultado6{
         let mut y : Vec<(Decimal, Decimal, Decimal, Decimal, Decimal)> = make_query::<(Decimal, Decimal, Decimal, Decimal, Decimal)>(format!("select  sum(condmuerto), sum(pasamuerto), sum(peatmuerto), sum(ciclmuerto), sum(otromuerto)
-        from atus_anual where anio = {0};", anio), pool).await.unwrap();
+        from atus_anual where anio = {};", anio), pool).await.unwrap();
         Resultado6{
             conduc :y.iter().map(|a| a.0).collect(),
             pasajero: y.iter().map(|a| a.1).collect(),
@@ -580,7 +580,6 @@ async fn query15(State(state): State<Arc<Pool<MySql>>>) -> impl IntoResponse {
 async fn query16(State(state): State<Arc<Pool<MySql>>>) -> impl IntoResponse {
     let msg = give_sum_vehicles(&state).await;
     println!("{:?}", msg);
-    println!("{:?}", msg);
     let mut response = (StatusCode::OK, serde_json::to_string(&msg).unwrap()).into_response();
     response.headers_mut().append(ACCESS_CONTROL_ALLOW_ORIGIN, HeaderValue::from_static("*"));
     response.headers_mut().append(ACCESS_CONTROL_ALLOW_HEADERS, HeaderValue::from_static("*"));
@@ -639,7 +638,6 @@ async fn main() {
         .route("/query7/", get(query7))
         .route("/query8/", get(query8))
         .route("/query9/", get(query9))
-       // .route("/query10/:tyype/:anio/:stat", get(query10))
         .route("/query11/", get(query11))
         .route("/query12/:anio", get(query12))
         .route("/query13/", get(query13))
